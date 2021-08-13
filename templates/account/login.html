@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}index.html{% endblock title %}
+{% block content %}
+    <div class="card my-5 mx-auto" style="max-width: 600px">
+        <form action="" method="POST">
+            <div class="card-header">
+                <h5 class="card-title my-0">アプリにログイン</h5>
+            </div>
+            <div class="card-body">
+                <form action="" method="POST">
+                    {% for field in form %}
+                        {{ field.label }}:
+                        {{ field }}
+                        {{ field.errors }}
+                        <hr>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">ログイン</button>
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                    {% csrf_token %}
+                </form>
+                {% for error in form.non_field_error %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+{% endblock content %}

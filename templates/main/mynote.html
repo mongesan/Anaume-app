@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% load django_bootstrap5 %}
+{% block title %}mynote.html{% endblock title %}
+{% block content %}
+    <h1>マイ英文帳ページ</h1>
+    <div class="card w-75 mx-auto mt-4 mb-5 p-0 text-center border-primary">
+        <div class="card-body">
+            <h5 class="step">STEP 0</h5>
+            <h5 class="card-title">新規の英文帳を作成</h5>
+            <h6 class="card-subtitle mb-2 text-muted">新しく英文を覚えよう</h6>
+            <form id="ajax-add-note" action="{% url 'main:mynote' %}" method="POST">
+                {#    <input type="text" id="id_title" required>#}
+                {% bootstrap_form note_form layout='horizontal' %}
+                <button class="btn btn-primary w-50" type="submit">作成</button>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+    <label for="select" class="btn btn-sm btn-secondary mt-3 mx-auto" style="width: 200px">英文帳の複数選択/削除</label>
+    <input class="d-none" type="checkbox" id="select">
+    <div class="note_select_form text-center">
+        <button class="btn btn-sm btn-danger mb-3">削除</button>
+        <label for="select" class="btn btn-sm btn-secondary mb-3">戻る</label>
+        <form>
+
+        </form>
+    </div>
+    <div class="notes text-center">
+        <h6 class="text-center">↓クリックで英文帳の閲覧・編集↓</h6>
+        <div class="d-inline-flex flex-wrap flex-row justify-content-center">
+            <div class="note m-75 py-3 mb-4 mx-3 row new" id="notes">
+                <div class="col-1 d-flex align-items-center" style="min-width: 50px; min-height: 50px">
+                    <p class="circle"></p>
+                </div>
+                <div class="col-9 px-0 d-flex align-items-center">
+                    <h5>あなたの英文帳一覧 <br> (合計{{ object_list.count }}個)</h5>
+                </div>
+            </div>
+            {% for note in object_list %}
+                <div class="note m-75 py-3 mx-3 mb-4 row"
+                     onclick="location.href='{% url 'main:note' note_id=note.id %}'">
+                    <div class="col-1 d-flex align-items-center" style="min-width: 50px; min-height: 50px">
+                        <p class="circle"></p>
+                    </div>
+                    <div class="col-9 px-0 d-flex align-items-center">
+                        <p>
+                            タイトル:<a href="{% url 'main:note' note_id=note.id %}"> {{ note.title }}</a>
+                            <br>作成者: {{ note.user }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
+{% block extra_js %}
+    <script src="{% static 'js/mynote.js' %}"></script>
+{% endblock %}

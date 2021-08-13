@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% load to_comma %}
+{% load access_list %}
+{% load django_bootstrap5 %}
+{% block title %}note.html{% endblock title %}
+{% block content %}
+    {#    THERE ARE NOTE#{{ id }}#}
+    {% if note.user.username == user.get_username %}
+        <div class="card mt-4 mx-auto w-100 text-center border-primary">
+            <div class="card-body" id="add-text">
+                <div class="STEP1">
+                    <h5 class="step">STEP 1</h5>
+                    <h5 class="card-title">新しい英文を登録</h5>
+                    <small class="text-muted">スペルミスに注意! 誤った単語や意味を覚えないで!</small>
+                    <form id="ajax-add-text" action="{% url 'main:note' note_id=id %}" method="POST" name="add_text">
+                        {% bootstrap_form form layout='horizontal' %}
+                        <button class="btn btn-primary w-50" type="submit">作成/次に進む</button>
+                        {% csrf_token %}
+                    </form>
+                </div>
+                <div class="opacity" id="STEP2">
+                    <h5 class="step mt-5 bg-success">STEP 2</h5>
+                    <h5 class="card-title mb-0">英文の穴埋めの位置を選択</h5>
+                    <small class="text-muted">クリックで穴にする部分を選んで下さい。</small>
+                </div>
+            </div>
+        </div>
+    {% else %}
+    {% endif %}
+    <div class="my-4 mx-auto w-100 text-center">
+        <div class="card border-success">
+            <div class="card-body bg-success text-white">
+                <div class="text-right position-relative">
+                    <button class="btn-fav position-absolute">
+                        {% if if_fav %}
+                            <i
+                            class="fas fa-star"></i></button>
+                        {% else %}
+                            <i
+                            class="far fa-star"></i></button>
+                        {% endif %}
+                    {#                    <a class="btn btn-fav position-absolute"><i#}
+                    {#                            class="fas fa-star"></i></a>#}
+                    {#                    <a class="btn btn-success position-absolute" style="top: 40px; background: #06C755"><i#}
+                    {#                            class="fab fa-line"></i></a>#}
+                    {#                    <a class="btn btn-success position-absolute" style="top: 90px; background: #3b5998"><i#}
+                    {#                            class="fab fa-facebook-f"></i></a>#}
+                </div>
+                {% if note.user.username == user.username %}
+                    <label for="name_change" class="btn btn-sm btn-secondary mb-2">タイトルの変更 <i
+                            class="fas fa-pencil-alt"></i></label>
+                    <input type="checkbox" id="name_change">
+                    <button type="button" class="btn btn-sm btn-danger mb-2 del_note_confirm" data-toggle="modal"
+                            data-target="#deleteNoteModal" data-pk="{{ note.title }}"
+                            data-url="{% url 'main:delete_note' note_id=note.id %}">英文帳の削除 <i
+                            class="fas fa-trash-alt"></i>
+                    </button>
+                {% endif %}
+                <h4 class="card-title font-weight-bold" id="title">英文帳:{{ note.title }}</h4>
+                <div class="name_change_form">
+                    <form id="name_form" action="{% url 'main:note' note_id=id %}" name="name_form" method="POST">
+                        <h4 class="card-title font-weight-bold">
+                            <label for="name">英文帳:</label>
+                            <input id="name" type="text" name="title" placeholder="新しいタイトル...">
+                        </h4>
+                        <button class="btn btn-sm btn-primary" type="submit"><i
+                                class="fas fa-pencil-alt"></i></button>
+                        {% csrf_token %}
+                        <label for="name_change" class="btn btn-sm btn-secondary m-0">戻る</label>
+                    </form>
+                </div>
+                <p class="card-text">作成者:{{ note.user }} 全<span id="total_t">{{ texts|length }}</span>文, <span
+                        id="total_w">{{ word_count }}</span>単語 </p>
+                <a href="{% url 'main:PDFView' note_id=id %}" class="btn btn-sm btn-primary mb-2">PDFを印刷・ダウンロード <i
+                        class="fas fa-file-pdf"></i></a>
+                <br>
+                <small>クリックで穴埋め部分の表示/非表示</small>
+            </div>
+
+            <ul class="list-group list-group-flush">
+                {% for text in texts %}
+                    <li class="list-group-item">
+                        <div class="text-right position-relative">
+                            <button class="btn btn-sm btn-outline-secondary mr-lg-3 copy-btn"
+                                    data-clipboard-text="{{ text.sentence }} {{ text.translation }}">copy
+                            </button>
+                            {% if note.user.username == user.username %}
+                                <button class="btn btn-sm btn-danger position-absolute del_text_confirm"
+                                        data-toggle="modal"
+                                        data-target="#deleteTextModal" data-pk="{{ text.sentence }}"
+                                        data-url="{% url 'main:delete_text' text_id=text.id %}"><i
+                                        class="fas fa-trash-alt"></i>
+                                </button>
+                            {% endif %}
+                        </div>
+                        {% for word in text.words %}
+                            {% access_list text.if_hide forloop.counter0 as hide %}
+                            {% if hide == 'Y' %}
+                                <input class="d-none check_box" type="checkbox"
+                                       id="t{{ text.id }}w{{ forloop.counter0 }}"
+                                       name="scales" checked>
+                                <label class="toggle"
+                                       for="t{{ text.id }}w{{ forloop.counter0 }}">{{ word|to_comma }}</label>
+                            {% else %}
+                                {{ word|to_comma }}
+                            {% endif %}
+                        {% endfor %}
+
+                        <br>
+                        {{ text.translation }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="deleteNoteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">確認</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <p>英文帳:<span id="del_note_pk"></span> を削除しますか？</p>
+                    <p>復元はできません。</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-danger" id="del_note_url">削除</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteTextModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">確認</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <p>本当に英文を削除しますか？</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-danger" id="del_text_url">削除</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static 'js/note.js' %}"></script>
+{% endblock %}
