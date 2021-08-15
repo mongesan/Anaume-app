@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import ListView
-from main.models import Note, Text, Fav
+from main.models import Note, Text, Fav, NoteLog
 from main.forms import NoteForm, TextForm
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4, portrait
@@ -16,9 +16,10 @@ from reportlab.lib.units import mm
 
 def index(request):
     if request.user.is_authenticated:
-        print(Fav.objects.filter(user=request.user))
         data = {
-            'fav_notes': Fav.objects.filter(user=request.user)
+            'fav_notes': Fav.objects.filter(user=request.user).order_by('-created_at')[:5],
+            'fav_all': len(Fav.objects.filter(user=request.user)),
+            'logs': NoteLog.objects.filter(user=request.user).order_by('created_at')[:5],
         }
         return render(request, 'main/dashboard.html', data)
     else:
@@ -50,8 +51,6 @@ class MyNoteListView(ListView):
 
 def note(request, note_id):
     if request.method == 'POST':
-        # print(request.POST.get('name'))
-        # print(request.POST)
         if request.POST.get('name') == "add_text":
             form = TextForm(request.POST)
             if form.is_valid:
@@ -75,8 +74,6 @@ def note(request, note_id):
             text = get_object_or_404(Text, id=request.POST.get('text_id'))
             text.if_hide = hides
             text.save()
-            # print(request.POST.get('text_id'))
-            # print(hides)
             data = {
                 "text_id": text.id,
                 "hides": hides,
@@ -99,6 +96,7 @@ def note(request, note_id):
         n = get_object_or_404(Note, pk=note_id)
         texts = Text.objects.filter(note=n).order_by('-id')
         if request.user.is_authenticated:
+            NoteLog.objects.create(note=n, user=request.user)
             if_fav = Fav.objects.filter(note=n, user=request.user).exists()
         else:
             if_fav = None
@@ -205,12 +203,10 @@ def fav_note(request, note_id):
     if request.method == "POST":
         if Note.objects.filter(id=note_id).exists():
             n = get_object_or_404(Note, id=note_id)
-            # print(request.POST.get('status'))
             if request.POST.get('status') == 'true':
                 Fav.objects.filter(note=n, user=request.user).delete()
             else:
                 Fav.objects.create(note=n, user=request.user)
-            # print(Fav.objects.filter(note=n, user=request.user))
             data = {
                 "test": "complited!",
             }

@@ -20,24 +20,61 @@
             </ul>
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-center">
-            <a href="{% url 'main:mynote' %}" class="btn btn-success px-5 py-4 my-4 font-weight-bold">マイ英文帳ページ<br>作成・閲覧・印刷</a>
+            <a href="{% url 'main:mynote' %}" class="btn btn-primary px-5 py-4 my-4 font-weight-bold">マイ英文帳ページ<br>作成・閲覧・印刷</a>
         </div>
     </div>
     <div class="row w-100 mx-auto d-flex justify-content-around">
-        <div class="col-md-5 bg-white border border-warning rounded text-center mt-4" style="height: 300px">
-            <h4 class="border-bottom border-warning py-3">お気に入りの英文帳一覧</h4>
-            お気に入りの英文帳を探そう
-            {% for fav_note in fav_notes %}
-                <p>{{ fav_note.note.title }}</p>
-            {% endfor %}
-            <p>coming soon...</p>
+        <div class="col-md-5 bg-white border border-warning rounded text-center mt-4">
+            <h4 class="border-bottom border-warning py-3">お気に入りの英文帳</h4>
+            <ul class="list-group mb-3">
+                {% for fav_note in fav_notes %}
+                    <li class="list-group-item">
+                        <button class="btn-fav border-0" formaction="">
+                            <i class="fas fa-star"></i>
+                        </button>
+                        <a href="{% url 'main:note' fav_note.note.id %}"
+                           class="font-weight-bold">{{ fav_note.note.title }} </a>
+                        <small class="text-muted">({{ fav_note.note.user.username }})</small>
+                    </li>
+                {% endfor %}
+                {% if fav_notes|length < fav_all %}
+                    <li onclick="location.href='{% url 'main:mynote' %}'"
+                        class="list-group-item list-group-item-warning list-group-item-action" style="cursor: pointer">
+                        一覧を見る(全{{ fav_all }}件)
+                    </li>
+                {% elif fav_notes|length == 0 %}
+                    <li class="list-group-item list-group-item-warning mb-3">
+                        お気に入り0件
+                    </li>
+                    <a href="{% url 'main:mynote' %}">英文帳を作成してみよう</a>
+                    <a href="{% url 'main:mynote' %}">英文帳を検索してみる</a>
+                {% else %}
+                    <li onclick="location.href='{% url 'main:mynote' %}'"
+                        class="list-group-item list-group-item-warning list-group-item-action" style="cursor: pointer">
+                        他の英文帳を検索する
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-        <div class="col-md-5 bg-white border border-success rounded text-center mt-4" style="height: 300px">
+        <div class="col-md-5 bg-white border border-success rounded text-center mt-4">
             <h4 class="border-bottom border-success py-3">英文帳の履歴</h4>
-            <div>
-                まずは英文帳を作成してみましょう!
-                <p>coming soon...</p>
-            </div>
+            <ul class="list-group mb-3">
+                {% if logs|length == 0 %}
+                    <li class="list-group-item list-group-item-success">履歴なし</li>
+                {% else %}
+                    {% for log in logs %}
+                        <li class="list-group-item">
+                            <button class="btn-fav border-0" formaction="">
+                                <i class="far fa-star"></i>
+                            </button>
+                            <a href="{% url 'main:note' log.note.id %}"
+                               class="font-weight-bold">{{ log.note.title }} </a>
+                            <small class="text-muted">({{ log.note.user.username }})</small>
+                        </li>
+                    {% endfor %}
+                    <li class="list-group-item list-group-item-success list-group-item-action">さらに履歴を見る</li>
+                {% endif %}
+            </ul>
         </div>
     </div>
 {% endblock content %}

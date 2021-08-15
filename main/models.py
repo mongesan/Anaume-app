@@ -5,7 +5,7 @@ from django_mysql.models import ListCharField
 
 class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    title = models.CharField('題名', max_length=30,)
+    title = models.CharField('題名', max_length=20)
     # desc = models.CharField('詳細', max_length=50, blank=True)
     # public = models.BooleanField('公開/非公開', default=False)
 
@@ -21,3 +21,10 @@ class Text(models.Model):
 class Fav(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     note = models.ForeignKey(Note, on_delete=models.CASCADE)
+    created_at = models.DateTimeField('作成日時', auto_now_add=True)
+
+
+class NoteLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    note = models.ForeignKey(Note, on_delete=models.CASCADE)
+    created_at = models.DateTimeField('作成日時', auto_now_add=True)

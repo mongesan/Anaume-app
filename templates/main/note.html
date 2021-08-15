@@ -3,6 +3,7 @@
 {% load to_comma %}
 {% load access_list %}
 {% load django_bootstrap5 %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/note.css' %}">{% endblock %}
 {% block title %}Anaume - {{ note.title }}{% endblock title %}
 {% block content %}
     {#    THERE ARE NOTE#{{ id }}#}

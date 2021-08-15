@@ -93,10 +93,6 @@ body {
     background-repeat: no-repeat;
 }
 
-.list-group-item{
-    padding-bottom: 40px;
-}
-
 @media screen and (max-width:400px) {
     .note {
         width: 210px;
