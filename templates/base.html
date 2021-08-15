@@ -58,6 +58,13 @@
         </ul>
     </div>
 </nav>
+{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		{% endfor %}
+	</ul>
+{% endif %}
 <div class="container">
     <div class="row mx-auto w-100 d-flex flex-column">
         {% block content %}
@@ -74,6 +81,7 @@
 <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script src="{% static 'js/base.js' %}"></script>
 {% block extra_js %}{% endblock %}
 </body>

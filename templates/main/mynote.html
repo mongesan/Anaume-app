@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n static %}
 {% load django_bootstrap5 %}
+{% load note_to_fav %}
 {% block title %}mynote.html{% endblock title %}
 {% block content %}
     <h1>マイ英文帳ページ</h1>
@@ -17,17 +18,17 @@
             </form>
         </div>
     </div>
-    <label for="select" class="btn btn-sm btn-secondary mt-3 mx-auto" style="width: 200px">英文帳の複数選択/削除</label>
-    <input class="d-none" type="checkbox" id="select">
-    <div class="note_select_form text-center">
-        <button class="btn btn-sm btn-danger mb-3">削除</button>
-        <label for="select" class="btn btn-sm btn-secondary mb-3">戻る</label>
-        <form>
-
-        </form>
-    </div>
+{#    <label for="select" class="btn btn-sm btn-secondary mt-3 mx-auto" style="width: 200px">英文帳の複数選択/削除</label>#}
+{#    <input class="d-none" type="checkbox" id="select">#}
+{#    <div class="note_select_form text-center">#}
+{#        <button class="btn btn-sm btn-danger mb-3">削除</button>#}
+{#        <label for="select" class="btn btn-sm btn-secondary mb-3">戻る</label>#}
+{#        <form>#}
+{##}
+{#        </form>#}
+{#    </div>#}
+    <h3>一覧表示</h3>
     <div class="notes text-center">
-        <h6 class="text-center">↓クリックで英文帳の閲覧・編集↓</h6>
         <div class="d-inline-flex flex-wrap flex-row justify-content-center">
             <div class="note m-75 py-3 mb-4 mx-3 row new" id="notes">
                 <div class="col-1 d-flex align-items-center" style="min-width: 50px; min-height: 50px">
@@ -39,7 +40,9 @@
             </div>
             {% for note in object_list %}
                 <div class="note m-75 py-3 mx-3 mb-4 row"
-                     onclick="location.href='{% url 'main:note' note_id=note.id %}'">
+                     onclick="location.href='{% url 'main:note' note_id=note.id %}'"
+                     data-toggle="tooltip"
+                     title="この英文帳を閲覧・編集">
                     <div class="col-1 d-flex align-items-center" style="min-width: 50px; min-height: 50px">
                         <p class="circle"></p>
                     </div>
@@ -49,7 +52,45 @@
                             <br>作成者: {{ note.user }}
                     </div>
                 </div>
+                <div class="text-right position-relative">
+                    <button class="btn-fav position-absolute" style="top:40px ;right: 5px"
+                            formaction="{% url 'main:fav_note' note_id=note.id %}"
+                            data-toggle="tooltip"
+                            title="お気に入り/解除">
+                            <i class="{% note_to_fav user note %} fa-star"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger position-absolute del_note_confirm"
+                            style="top: 130px; right: 7px"
+                            id="n{{ note.id }}"
+                            data-toggle="modal"
+                            title="この英文帳を削除"
+                            data-target="#deleteNoteModal" data-pk="{{ note.title }}"
+                            data-url="{% url 'main:delete_note' note_id=note.id %}"><i
+                            class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
             {% endfor %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteNoteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">確認</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <p>英文帳:<span id="del_note_pk"></span> を削除しますか？</p>
+                    <p>復元はできません。</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-danger" id="del_note_url">削除</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock content %}

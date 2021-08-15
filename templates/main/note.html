@@ -6,6 +6,7 @@
 {% block title %}note.html{% endblock title %}
 {% block content %}
     {#    THERE ARE NOTE#{{ id }}#}
+    <h1>英文帳</h1>
     {% if note.user.username == user.get_username %}
         <div class="card mt-4 mx-auto w-100 text-center border-primary">
             <div class="card-body" id="add-text">
@@ -32,14 +33,17 @@
         <div class="card border-success">
             <div class="card-body bg-success text-white">
                 <div class="text-right position-relative">
-                    <button class="btn-fav position-absolute">
+                    <small class="text-white">お気に入りボタン→</small>
+                    <button class="btn-fav position-absolute" style="top:-3px"
+                            formaction="{% url 'main:fav_note' note_id=note.id %}"
+                            data-toggle="tooltip"
+                    title="お気に入り/解除">
                         {% if if_fav %}
-                            <i
-                            class="fas fa-star"></i></button>
+                            <i class="fas fa-star"></i>
                         {% else %}
-                            <i
-                            class="far fa-star"></i></button>
+                            <i class="far fa-star"></i>
                         {% endif %}
+                    </button>
                     {#                    <a class="btn btn-fav position-absolute"><i#}
                     {#                            class="fas fa-star"></i></a>#}
                     {#                    <a class="btn btn-success position-absolute" style="top: 40px; background: #06C755"><i#}
@@ -78,16 +82,19 @@
                 <small>クリックで穴埋め部分の表示/非表示</small>
             </div>
 
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush" id="note-list">
                 {% for text in texts %}
                     <li class="list-group-item">
+                        {#                        <span class="handle" style="font-size: 20px"><i class="fas fa-sort"></i></span>#}
                         <div class="text-right position-relative">
                             <button class="btn btn-sm btn-outline-secondary mr-lg-3 copy-btn"
-                                    data-clipboard-text="{{ text.sentence }} {{ text.translation }}">copy
+                                    data-clipboard-text="{{ text.sentence }} {{ text.translation }}"
+                            data-toggle="tooltip" title="全文をコピー">copy
                             </button>
                             {% if note.user.username == user.username %}
                                 <button class="btn btn-sm btn-danger position-absolute del_text_confirm"
                                         data-toggle="modal"
+                                        title="この文を削除"
                                         data-target="#deleteTextModal" data-pk="{{ text.sentence }}"
                                         data-url="{% url 'main:delete_text' text_id=text.id %}"><i
                                         class="fas fa-trash-alt"></i>
@@ -109,6 +116,7 @@
 
                         <br>
                         {{ text.translation }}
+                        <p class="handle m-0" style="font-size: 20px"><i class="fas fa-sort" data-toggle="tooltip" title="ドラックで順番の変更"></i></p>
                     </li>
                 {% endfor %}
             </ul>

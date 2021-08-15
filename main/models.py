@@ -20,4 +20,4 @@ class Text(models.Model):
 
 class Fav(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    note_id = models.ForeignKey(Note, on_delete=models.CASCADE)
+    note = models.ForeignKey(Note, on_delete=models.CASCADE)

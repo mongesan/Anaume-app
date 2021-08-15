@@ -26,7 +26,10 @@
     <div class="row w-100 mx-auto d-flex justify-content-around">
         <div class="col-md-5 bg-white border border-warning rounded text-center mt-4" style="height: 300px">
             <h4 class="border-bottom border-warning py-3">お気に入りの英文帳一覧</h4>
-            お気に入りの英文帳を探して<br>☆を押してみませんか?
+            お気に入りの英文帳を探そう
+            {% for fav_note in fav_notes %}
+                <p>{{ fav_note.note.title }}</p>
+            {% endfor %}
             <p>coming soon...</p>
         </div>
         <div class="col-md-5 bg-white border border-success rounded text-center mt-4" style="height: 300px">

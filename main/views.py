@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse, FileResponse, Http404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.generic import ListView
 from main.models import Note, Text, Fav
 from main.forms import NoteForm, TextForm
@@ -14,11 +15,12 @@ from reportlab.lib.units import mm
 
 
 def index(request):
-    # data = {
-    #     'random_note':
-    # }
     if request.user.is_authenticated:
-        return render(request, 'main/dashboard.html')
+        print(Fav.objects.filter(user=request.user))
+        data = {
+            'fav_notes': Fav.objects.filter(user=request.user)
+        }
+        return render(request, 'main/dashboard.html', data)
     else:
         return render(request, 'main/index.html')
 
@@ -96,7 +98,7 @@ def note(request, note_id):
     else:
         n = get_object_or_404(Note, pk=note_id)
         texts = Text.objects.filter(note=n).order_by('-id')
-        if_fav = Fav.objects.filter(user=request.user, note_id=note_id).exists()
+        if_fav = Fav.objects.filter(note=n, user=request.user).exists()
         word_count = 0
         for text in texts:
             word_count += len(text.words)
@@ -192,4 +194,24 @@ def delete_text(request, text_id):
     n = t.note
     if n.user == request.user:
         t.delete()
+        messages.error(request, 'メッセージのテスト')
     return redirect('main:note', n.id)
+
+
+def fav_note(request, note_id):
+    if request.method == "POST":
+        if Note.objects.filter(id=note_id).exists():
+            n = get_object_or_404(Note, id=note_id)
+            # print(request.POST.get('status'))
+            if request.POST.get('status') == 'true':
+                Fav.objects.filter(note=n, user=request.user).delete()
+            else:
+                Fav.objects.create(note=n, user=request.user)
+            # print(Fav.objects.filter(note=n, user=request.user))
+            data = {
+                "test": "complited!",
+            }
+            return JsonResponse(data)
+        return Http404
+    else:
+        return Http404

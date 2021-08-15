@@ -1,3 +1,6 @@
+const el = document.getElementById('note-list');
+const sortable = Sortable.create(el, {animation: 300, handle:".handle"});
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -62,7 +65,7 @@ $("form#ajax-add-text").on('submit', e => {
             $('<div class="text-right position-relative"><button class="btn btn-sm btn-danger position-absolute del_text_confirm" data-toggle="modal"\n' +
                 '                        data-target="#deleteTextModal" data-pk="' + response['sentence'] + '"\n' +
                 '                        data-url="/text/delete/' + response['ajaxed_id'] + '"><i class="fas fa-trash-alt"></i>\n' +
-                '                            </button></div>' + '<span>' + response['sentence'] + '</span><br><span>' + response['translation'] + '</span>').appendTo('#t' + String(aid));
+                '                            </button></div>' + '<span>' + response['sentence'] + '</span><br><span>' + response['translation'] + '</span><br><p class="handle m-0" style="font-size: 20px"><i class="fas fa-sort" data-toggle="tooltip" title="ドラックで順番の変更"></i></p>').appendTo('#t' + String(aid));
             const total_t = Number($("span#total_t").text()) + 1;
             const total_w = Number($("span#total_w").text()) + words.length;
             $("#total_t").text(String(total_t))
@@ -95,7 +98,9 @@ $(document).on('submit', "form#ajax-checkbox-text", e => {
             const translation = response["translation"]
             $("#t" + String(response["text_id"])).empty();
             $('<div class="text-right position-relative">\n' +
-                '                            <button class="btn btn-danger position-absolute"><i class="fas fa-trash-alt"></i></button>' +
+                '                            <button class="btn btn-sm btn-danger position-absolute del_text_confirm" data-toggle="modal"\n' +
+                '                        data-target="#deleteTextModal" data-pk="' + response['sentence'] + '"\n' +
+                '                        data-url="/text/delete/' + response['text_id'] + '"><i class="fas fa-trash-alt"></i></button>' +
                 '                        </div>').appendTo('#t' + String(response["text_id"]));
             for (let i = 0; i < hides.length; i++) {
                 let word_id = "t" + String(response["text_id"]) + "w" + String(i)
@@ -111,7 +116,7 @@ $(document).on('submit', "form#ajax-checkbox-text", e => {
                 // console.log(hides[i])
                 // console.log(words[i])
             }
-            $('<br><span>' + translation + '</span>').appendTo('#t' + String(response["text_id"]));
+            $('<br><span>' + translation + '</span><br><p class="handle m-0" style="font-size: 20px"><i class="fas fa-sort" data-toggle="tooltip" title="ドラックで順番の変更"></i></p>\').appendTo(\'#t\' + String(aid))').appendTo('#t' + String(response["text_id"]));
             $("form#ajax-checkbox-text").remove();
             $("#STEP2").addClass("opacity");
             $(window).scrollTop(500);
@@ -158,9 +163,21 @@ $(function () {
     });
 });
 
-$(".btn-fav").on('click', function () {
-    const icon = $(this).children("i")
-    if ($(icon).hasClass("fas")) { //ファボされた
+$(".btn-fav").on('click', e => {
+    const icon = $(".btn-fav").children("i")
+    const c = $(icon).hasClass("fas")
+    e.preventDefault()
+    $.ajax({
+        url: $(".btn-fav").attr("formaction"),
+        method: 'POST',
+        data: 'status=' + String(c),
+        timeout: 10000,
+
+    })
+        .done(response => {
+
+        });
+    if (c) { //ファボされた
         $(icon).removeClass("fas");
         $(icon).addClass("far");
     } else { //ファボはずされた
