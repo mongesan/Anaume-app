@@ -1,5 +1,5 @@
 $(function () {
-    $('.del_note_confirm').on('click', function () {
+    $(document).on('click', '.del_note_confirm',function () {
         $("#del_note_pk").text($(this).data("pk"));
         $('#del_note_url').attr('href', $(this).data("url"));
     });
@@ -49,7 +49,7 @@ $("form#ajax-add-note").on('submit', e => {
     })
         .done(response => {
             // <p>はろー</p>のような要素を作成し、それを記事一覧エリアに追加し、入力欄をクリアする。
-            const p = "<div class=\"note m-75 py-3 mb-4 mx-3 row new\"\n" +
+            let p = "<div class=\"note m-75 py-3 mb-4 mx-3 row new\"\n" +
                 "                     onclick=\"location.href='/note/" +
                 response['note_id'] + "'\">\n" +
                 "                    <div class=\"col-1 d-flex align-items-center\" style=\"min-width: 50px; min-height: 50px\">\n" +
@@ -64,6 +64,24 @@ $("form#ajax-add-note").on('submit', e => {
                 "" +
                 "                        </p></div>\n" +
                 "                </div>"
+            p +="<div class=\"text-right position-relative\">\n" +
+                "\n" +
+                "                    <button class=\"btn-fav position-absolute\" style=\"top:40px ;right: 5px\"\n" +
+                "                            formaction=\"/note/fav/" + response['note_id'] + "\"\n" +
+                "                            data-toggle=\"tooltip\"\n" +
+                "                            title=\"お気に入り/解除\">\n" +
+                "                            <i class=\"far fa-star\"></i>\n" +
+                "                    </button>\n" +
+                "                    <button class=\"btn btn-sm btn-danger position-absolute del_note_confirm\"\n" +
+                "                            style=\"top: 130px; right: 7px\"\n" +
+                "                            id=\"n" + response['note_id'] +"\"\n" +
+                "                            data-toggle=\"modal\"\n" +
+                "                            title=\"この英文帳を削除\"\n" +
+                "                            data-target=\"#deleteNoteModal\" data-pk=\""+ response['title'] +"\"\n" +
+                "                            data-url=\"/note/delete/"+ response['note_id'] + "\"><i\n" +
+                "                            class=\"fas fa-trash-alt\"></i>\n" +
+                "                    </button>\n" +
+                "                </div>"
             // console.log(p)
             $("input#id_title").val("");
             $('#notes').after(p);
@@ -71,7 +89,7 @@ $("form#ajax-add-note").on('submit', e => {
 });
 
 
-$(document).on('click', ".btn-fav",function (e) {
+$(document).on('click', ".btn-fav", function (e) {
     const icon = $(this).children("i")
     const c = icon.hasClass("fas")
 

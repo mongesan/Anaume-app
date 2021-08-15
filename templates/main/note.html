@@ -3,10 +3,10 @@
 {% load to_comma %}
 {% load access_list %}
 {% load django_bootstrap5 %}
-{% block title %}note.html{% endblock title %}
+{% block title %}Anaume - {{ note.title }}{% endblock title %}
 {% block content %}
     {#    THERE ARE NOTE#{{ id }}#}
-    <h1>英文帳</h1>
+    <h1>英文帳ページ</h1>
     {% if note.user.username == user.get_username %}
         <div class="card mt-4 mx-auto w-100 text-center border-primary">
             <div class="card-body" id="add-text">
@@ -32,26 +32,26 @@
     <div class="my-4 mx-auto w-100 text-center">
         <div class="card border-success">
             <div class="card-body bg-success text-white">
-                <div class="text-right position-relative">
-                    <small class="text-white">お気に入りボタン→</small>
-                    <button class="btn-fav position-absolute" style="top:-3px"
-                            formaction="{% url 'main:fav_note' note_id=note.id %}"
-                            data-toggle="tooltip"
-                    title="お気に入り/解除">
-                        {% if if_fav %}
-                            <i class="fas fa-star"></i>
-                        {% else %}
-                            <i class="far fa-star"></i>
-                        {% endif %}
-                    </button>
-                    {#                    <a class="btn btn-fav position-absolute"><i#}
-                    {#                            class="fas fa-star"></i></a>#}
-                    {#                    <a class="btn btn-success position-absolute" style="top: 40px; background: #06C755"><i#}
-                    {#                            class="fab fa-line"></i></a>#}
-                    {#                    <a class="btn btn-success position-absolute" style="top: 90px; background: #3b5998"><i#}
-                    {#                            class="fab fa-facebook-f"></i></a>#}
-                </div>
                 {% if note.user.username == user.username %}
+                    <div class="text-right position-relative">
+                        <small class="text-white">お気に入りボタン→</small>
+                        <button class="btn-fav position-absolute" style="top:-3px"
+                                formaction="{% url 'main:fav_note' note_id=note.id %}"
+                                data-toggle="tooltip"
+                                title="お気に入り/解除">
+                            {% if if_fav %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        </button>
+                        {#                    <a class="btn btn-fav position-absolute"><i#}
+                        {#                            class="fas fa-star"></i></a>#}
+                        {#                    <a class="btn btn-success position-absolute" style="top: 40px; background: #06C755"><i#}
+                        {#                            class="fab fa-line"></i></a>#}
+                        {#                    <a class="btn btn-success position-absolute" style="top: 90px; background: #3b5998"><i#}
+                        {#                            class="fab fa-facebook-f"></i></a>#}
+                    </div>
                     <label for="name_change" class="btn btn-sm btn-secondary mb-2">タイトルの変更 <i
                             class="fas fa-pencil-alt"></i></label>
                     <input type="checkbox" id="name_change">
@@ -89,7 +89,7 @@
                         <div class="text-right position-relative">
                             <button class="btn btn-sm btn-outline-secondary mr-lg-3 copy-btn"
                                     data-clipboard-text="{{ text.sentence }} {{ text.translation }}"
-                            data-toggle="tooltip" title="全文をコピー">copy
+                                    data-toggle="tooltip" title="全文をコピー">copy
                             </button>
                             {% if note.user.username == user.username %}
                                 <button class="btn btn-sm btn-danger position-absolute del_text_confirm"
@@ -101,6 +101,7 @@
                                 </button>
                             {% endif %}
                         </div>
+                        <span class="user-select-none" style="font-size: 30px">{{ forloop.counter }}.</span>
                         {% for word in text.words %}
                             {% access_list text.if_hide forloop.counter0 as hide %}
                             {% if hide == 'Y' %}
@@ -116,7 +117,10 @@
 
                         <br>
                         {{ text.translation }}
-                        <p class="handle m-0" style="font-size: 20px"><i class="fas fa-sort" data-toggle="tooltip" title="ドラックで順番の変更"></i></p>
+                        {% if note.user.username == user.username %}
+                            <p class="handle m-0" style="font-size: 20px"><i class="fas fa-sort" data-toggle="tooltip"
+                                                                             title="ドラックで順番の変更"></i></p>
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>

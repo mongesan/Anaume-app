@@ -98,7 +98,10 @@ def note(request, note_id):
     else:
         n = get_object_or_404(Note, pk=note_id)
         texts = Text.objects.filter(note=n).order_by('-id')
-        if_fav = Fav.objects.filter(note=n, user=request.user).exists()
+        if request.user.is_authenticated:
+            if_fav = Fav.objects.filter(note=n, user=request.user).exists()
+        else:
+            if_fav = None
         word_count = 0
         for text in texts:
             word_count += len(text.words)
