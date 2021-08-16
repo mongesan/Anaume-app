@@ -37,6 +37,12 @@
                     <a class="nav-link" href="{% url 'account:signup' %}">SIGNUP</a>
                 </li>
             {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:mynote' %}">MY-NOTE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:favorite' %}">FAVORITES</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown"
@@ -44,26 +50,27 @@
                         {{ user.username }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="{% url 'main:index' %}">ダッシュボード</a>
+                        <a class="dropdown-item" href="{% url 'main:history' %}">閲覧履歴</a>
+                        <a class="dropdown-item" href="{% url 'account:index' %}">アカウント</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item bg-danger text-white" href="{% url 'account:logout' %}">ログアウト</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account:logout' %}">LOGOUT</a>
-                </li>
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link" href="{% url 'account:logout' %}">LOGOUT</a>#}
+{#                </li>#}
             {% endif %}
 
         </ul>
     </div>
 </nav>
 {% if messages %}
-	<ul class="messages">
-		{% for message in messages %}
-			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-		{% endfor %}
-	</ul>
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
 {% endif %}
 <div class="container">
     <div class="row mx-auto w-100 d-flex flex-column">

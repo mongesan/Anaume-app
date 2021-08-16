@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block title %}dashboard.html{% endblock title %}
+{% load i18n static %}
+{% load note_to_fav %}
+{% block title %}ダッシュボード - Anaume-app{% endblock title %}
 {% block content %}
     <h1>ダッシュボード</h1>
     <div class="row bg-white w-100 mx-auto border border-primary rounded">
@@ -29,7 +31,7 @@
             <ul class="list-group mb-3">
                 {% for fav_note in fav_notes %}
                     <li class="list-group-item">
-                        <button class="btn-fav border-0" formaction="">
+                        <button class="btn-fav border-0" formaction="{% url 'main:fav_note' note_id=fav_note.note.id %}">
                             <i class="fas fa-star"></i>
                         </button>
                         <a href="{% url 'main:note' fav_note.note.id %}"
@@ -49,9 +51,9 @@
                     <a href="{% url 'main:mynote' %}">英文帳を作成してみよう</a>
                     <a href="{% url 'main:mynote' %}">英文帳を検索してみる</a>
                 {% else %}
-                    <li onclick="location.href='{% url 'main:mynote' %}'"
+                    <li onclick="location.href='{% url 'main:favorite' %}'"
                         class="list-group-item list-group-item-warning list-group-item-action" style="cursor: pointer">
-                        他の英文帳を検索する
+                        一覧を見る(全{{ fav_all }}件)
                     </li>
                 {% endif %}
             </ul>
@@ -64,17 +66,21 @@
                 {% else %}
                     {% for log in logs %}
                         <li class="list-group-item">
-                            <button class="btn-fav border-0" formaction="">
-                                <i class="far fa-star"></i>
+                            <button class="btn-fav border-0" formaction="{% url 'main:fav_note' note_id=log.note.id %}">
+                                <i class="{% note_to_fav user log.note %} fa-star"></i>
                             </button>
                             <a href="{% url 'main:note' log.note.id %}"
                                class="font-weight-bold">{{ log.note.title }} </a>
                             <small class="text-muted">({{ log.note.user.username }})</small>
                         </li>
                     {% endfor %}
-                    <li class="list-group-item list-group-item-success list-group-item-action">さらに履歴を見る</li>
+                    <li onclick="location.href='{% url 'main:history' %}'"
+                            class="list-group-item list-group-item-success list-group-item-action" style="cursor: pointer">さらに履歴を見る</li>
                 {% endif %}
             </ul>
         </div>
     </div>
 {% endblock content %}
+{% block extra_js %}
+    <script src="{% static 'js/btn-fav.js' %}"></script>
+{% endblock %}

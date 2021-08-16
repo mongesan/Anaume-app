@@ -11,5 +11,6 @@ urlpatterns = [
     path('note/delete/<int:note_id>', views.delete_note, name="delete_note"),
     path('text/delete/<int:text_id>', views.delete_text, name="delete_text"),
     path('pdf/<int:note_id>', views.PDFView, name='PDFView'),
-    # path('note/ajax_note_add', views.ajax_note_add, name='ajax_note_add')
+    path('favorite', views.favorite, name='favorite'),
+    path('history', views.history, name='history'),
 ]

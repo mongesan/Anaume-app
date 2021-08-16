@@ -3,7 +3,8 @@
 {% load to_comma %}
 {% load access_list %}
 {% load django_bootstrap5 %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'css/note.css' %}">{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/note.css' %}">{% endblock %}
 {% block title %}Anaume - {{ note.title }}{% endblock title %}
 {% block content %}
     {#    THERE ARE NOTE#{{ id }}#}
@@ -33,26 +34,28 @@
     <div class="my-4 mx-auto w-100 text-center">
         <div class="card border-success">
             <div class="card-body bg-success text-white">
+            {% if user.is_authenticated %}
+                <div class="text-right position-relative">
+                    <small class="text-white">お気に入りボタン→</small>
+                    <button class="btn-fav position-absolute" style="top:-3px"
+                            formaction="{% url 'main:fav_note' note_id=note.id %}"
+                            data-toggle="tooltip"
+                            title="お気に入り/解除">
+                        {% if if_fav %}
+                            <i class="fas fa-star"></i>
+                        {% else %}
+                            <i class="far fa-star"></i>
+                        {% endif %}
+                    </button>
+                    {#                    <a class="btn btn-fav position-absolute"><i#}
+                    {#                            class="fas fa-star"></i></a>#}
+                    {#                    <a class="btn btn-success position-absolute" style="top: 40px; background: #06C755"><i#}
+                    {#                            class="fab fa-line"></i></a>#}
+                    {#                    <a class="btn btn-success position-absolute" style="top: 90px; background: #3b5998"><i#}
+                    {#                            class="fab fa-facebook-f"></i></a>#}
+                </div>
+            {% endif %}
                 {% if note.user.username == user.username %}
-                    <div class="text-right position-relative">
-                        <small class="text-white">お気に入りボタン→</small>
-                        <button class="btn-fav position-absolute" style="top:-3px"
-                                formaction="{% url 'main:fav_note' note_id=note.id %}"
-                                data-toggle="tooltip"
-                                title="お気に入り/解除">
-                            {% if if_fav %}
-                                <i class="fas fa-star"></i>
-                            {% else %}
-                                <i class="far fa-star"></i>
-                            {% endif %}
-                        </button>
-                        {#                    <a class="btn btn-fav position-absolute"><i#}
-                        {#                            class="fas fa-star"></i></a>#}
-                        {#                    <a class="btn btn-success position-absolute" style="top: 40px; background: #06C755"><i#}
-                        {#                            class="fab fa-line"></i></a>#}
-                        {#                    <a class="btn btn-success position-absolute" style="top: 90px; background: #3b5998"><i#}
-                        {#                            class="fab fa-facebook-f"></i></a>#}
-                    </div>
                     <label for="name_change" class="btn btn-sm btn-secondary mb-2">タイトルの変更 <i
                             class="fas fa-pencil-alt"></i></label>
                     <input type="checkbox" id="name_change">

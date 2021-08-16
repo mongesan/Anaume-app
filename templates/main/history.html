@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% load note_to_fav %}
+{% load django_bootstrap5 %}
+{% block extra_css %}{% endblock %}
+{% block title %}History - Anaume.app{% endblock title %}
+
+{% block content %}
+    <h1>閲覧履歴</h1>
+    <small class="text-muted">最新 {{ logs|length }}件を表示中</small>
+    <ul class="list-group">
+        {% for log in logs %}
+            <li class="list-group-item px-5 py-3">
+                <button class="btn-fav border-0" formaction="{% url 'main:fav_note' note_id=log.note.id %}">
+                    <i class="{% note_to_fav user log.note %} fa-star"></i>
+                </button>
+                <a href="{% url 'main:note' log.note.id %}">{{ log.note.title }}</a>
+                <small class="text-muted">({{ log.note.user.username }})</small>
+                <small class="text-muted float-right">{{ log.created_at }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="{% static 'js/btn-fav.js' %}"></script>
+{% endblock %}

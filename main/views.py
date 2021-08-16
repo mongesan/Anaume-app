@@ -19,14 +19,29 @@ def index(request):
         data = {
             'fav_notes': Fav.objects.filter(user=request.user).order_by('-created_at')[:5],
             'fav_all': len(Fav.objects.filter(user=request.user)),
-            'logs': NoteLog.objects.filter(user=request.user).order_by('created_at')[:5],
+            'logs': NoteLog.objects.filter(user=request.user).order_by('-created_at')[:5],
         }
         return render(request, 'main/dashboard.html', data)
     else:
         return render(request, 'main/index.html')
 
 
-# @login_required()
+@login_required
+def favorite(request):
+    data = {
+        'favs': Fav.objects.filter(user=request.user).order_by('-created_at')
+    }
+    return render(request, 'main/favorite.html', data)
+
+
+@login_required
+def history(request):
+    data = {
+        'logs': NoteLog.objects.filter(user=request.user).order_by('-created_at')[:100]
+    }
+    return render(request, 'main/history.html', data)
+
+
 @method_decorator(login_required(), name='dispatch')
 class MyNoteListView(ListView):
     template_name = 'main/mynote.html'
@@ -96,7 +111,12 @@ def note(request, note_id):
         n = get_object_or_404(Note, pk=note_id)
         texts = Text.objects.filter(note=n).order_by('-id')
         if request.user.is_authenticated:
-            NoteLog.objects.create(note=n, user=request.user)
+            if NoteLog.objects.filter(user=request.user, note=n).exists():
+                # if NoteLog.objects.filter(user=request.user, note=n).latest("created_at").note != n:
+                NoteLog.objects.filter(user=request.user, note=n).delete()
+                NoteLog.objects.create(note=n, user=request.user)
+            else:
+                NoteLog.objects.create(note=n, user=request.user)
             if_fav = Fav.objects.filter(note=n, user=request.user).exists()
         else:
             if_fav = None
