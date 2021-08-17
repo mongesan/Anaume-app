@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% load django_bootstrap5 %}
+{% block extra_css %}{% endblock %}
+{% block title %}アカウント情報 - Anaume.app{% endblock title %}
+
+{% block content %}
+    <h1>アカウント情報</h1>
+    <div class="row bg-white w-100 mx-auto border border-primary rounded">
+        <div class="col-md-1 d-none d-md-flex align-items-center">
+            <p class="circle" style="background: #999999"></p>
+        </div>
+        <div class="col-md-5 d-flex align-items-center justify-content-center text-center text-md-left border-right border-left">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item py-0">
+                    <h4 class="my-2">ユーザー名: {{ user.get_username }}</h4>
+                </li>
+                <li class="list-group-item py-0">
+                    <a href="{% url 'account:logout' %}" class="my-2 btn btn-sm btn-secondary">ユーザー名の変更</a>
+                </li>
+                <li class="list-group-item py-0">
+                    <a href="{% url 'main:favorite' %}" class="my-2 btn btn-sm btn-warning">お気に入りの英文帳</a>
+                    <a href="{% url 'main:history' %}" class="my-2 btn btn-sm btn-success">閲覧履歴</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3 d-flex align-items-center justify-content-center">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item py-0">
+                    <h6 class="my-2">スコア</h6>
+                </li>
+                <li class="list-group-item py-0">
+                    <h6 class="my-0">作成した英文帳の数: {{ c_note }}個</h6>
+                </li>
+                <li class="list-group-item py-0">
+                    <h6 class="my-0">作成した文の数: {{ c_text }}文</h6>
+                </li>
+                <li class="list-group-item py-0">
+                    <h6 class="my-0">総単語数: {{ c_word }}語</h6>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3 d-flex align-items-center justify-content-center">
+            <a href="{% url 'main:mynote' %}" class="btn btn-primary px-5 py-4 my-4 font-weight-bold">マイ英文帳ページ<br>作成・閲覧・印刷</a>
+        </div>
+        <ul class="list-group list-group-flush col-md-12 px-0 border-top">
+            <li class="list-group-item py-0">
+                <a href="{% url 'account:password_change' %}"
+                   class="my-2 btn btn-sm btn-outline-secondary float-right">パスワードの変更</a>
+            </li>
+            <li class="list-group-item py-0">
+                <a href="{% url 'account:index' %}"
+                   class="my-2 btn btn-sm btn-outline-danger float-right">閲覧履歴の削除</a>
+            </li>
+            <li class="list-group-item py-0">
+                <a href="{% url 'account:index' %}" class="my-2 btn btn-sm btn-outline-danger float-right">退会</a>
+            </li>
+        </ul>
+
+    </div>
+    {#    <ul class="list-group list-group-flush col-md-6">#}
+    {#                <li class="list-group-item py-0">#}
+    {#                    <a href="{% url 'account:index' %}" class="my-2 btn btn-sm btn-outline-secondary float-right">パスワードの変更</a>#}
+    {#                </li>#}
+    {#                <li class="list-group-item py-0">#}
+    {#                    <a href="{% url 'account:index' %}"#}
+    {#                       class="my-2 btn btn-sm btn-outline-danger float-right">閲覧履歴の削除</a>#}
+    {#                </li>#}
+    {#                <li class="list-group-item py-0">#}
+    {#                    <a href="{% url 'account:index' %}" class="my-2 btn btn-sm btn-outline-danger float-right">退会</a>#}
+    {#                </li>#}
+    {#            </ul>#}
+
+{% endblock content %}
+
+{% block extra_js %}
+
+{% endblock %}
