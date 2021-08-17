@@ -13,4 +13,5 @@ urlpatterns = [
     path('pdf/<int:note_id>', views.PDFView, name='PDFView'),
     path('favorite', views.favorite, name='favorite'),
     path('history', views.history, name='history'),
+    path('change_order/<int:note_id>', views.ordering, name="change_order")
 ]

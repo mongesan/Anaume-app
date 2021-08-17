@@ -16,6 +16,7 @@ class Text(models.Model):
     words = ListCharField(models.CharField(max_length=20), size=40, max_length=(21 * 40), default="")
     if_hide = ListCharField(models.CharField(max_length=1), size=40, max_length=(2 * 40), default="")
     translation = models.CharField(max_length=400)
+    order = models.IntegerField(default=0)
 
 
 class Fav(models.Model):

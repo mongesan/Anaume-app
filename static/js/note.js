@@ -1,5 +1,29 @@
 const el = document.getElementById('note-list');
-const sortable = Sortable.create(el, {animation: 300, handle:".handle"});
+const sortable = Sortable.create(el, {
+    animation: 300,
+    handle: ".handle",
+    onEnd: function (evt) {
+        let all_order = Array()
+        let all_id = Array()
+        $(".list-group-item").each(function (i, elem) {
+            all_order.push($(elem).val())
+            all_id.push($(elem).attr("id"))
+        })
+        $.ajax({
+            url: '/change_order/' + $('.hiddenNoteID').attr('id'),
+            method: 'POST',
+            data: {
+                "all_order": all_order,
+                "all_id": all_id
+            },
+            timeout: 10000,
+        }).done(response => {
+            $(".list-group-item").each(function (i, elem) {
+                $(elem).children('.num').text(String(i+1)+'.')
+            })
+        })
+    }
+});
 
 $("form#ajax-add-text").on('submit', e => {
     // デフォルトのイベントをキャンセルし、ページ遷移しないように!
@@ -153,3 +177,4 @@ $(".btn-fav").on('click', e => {
         $(icon).addClass("fas");
     }
 })
+

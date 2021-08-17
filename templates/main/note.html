@@ -33,7 +33,7 @@
     {% endif %}
     <div class="my-4 mx-auto w-100 text-center">
         <div class="card border-success">
-            <div class="card-body bg-success text-white">
+            <div class="card-body bg-success text-white hiddenNoteID" id="{{ note.id }}">
             {% if user.is_authenticated %}
                 <div class="text-right position-relative">
                     <small class="text-white">お気に入りボタン→</small>
@@ -88,7 +88,7 @@
 
             <ul class="list-group list-group-flush" id="note-list">
                 {% for text in texts %}
-                    <li class="list-group-item">
+                    <li class="list-group-item" value="{{ text.order }}" id="{{ text.id }}">
                         {#                        <span class="handle" style="font-size: 20px"><i class="fas fa-sort"></i></span>#}
                         <div class="text-right position-relative">
                             <button class="btn btn-sm btn-outline-secondary mr-lg-3 copy-btn"
@@ -105,7 +105,7 @@
                                 </button>
                             {% endif %}
                         </div>
-                        <span class="user-select-none" style="font-size: 30px">{{ forloop.counter }}.</span>
+                        <span class="user-select-none num" style="font-size: 30px">{{ text.order|add:"1" }}.</span>
                         {% for word in text.words %}
                             {% access_list text.if_hide forloop.counter0 as hide %}
                             {% if hide == 'Y' %}

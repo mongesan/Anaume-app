@@ -74,6 +74,10 @@ def note(request, note_id):
                 text.words = words.replace(',', '/').split(' ')
                 text.if_hide = ['N'] * len(text.words)
                 text.note = get_object_or_404(Note, pk=note_id)
+                if Text.objects.filter(note=text.note).exists():
+                    text.order = Text.objects.filter(note=text.note).order_by('order').last().order + 1
+                else:
+                    text.order = 0
                 text.save()
                 data = {
                     'ajaxed_id': text.id,
@@ -109,7 +113,12 @@ def note(request, note_id):
 
     else:
         n = get_object_or_404(Note, pk=note_id)
-        texts = Text.objects.filter(note=n).order_by('-id')
+        i = 0
+        texts = Text.objects.filter(note=n).order_by('order', '-id')
+        for text in texts:
+            text.order = i
+            text.save()
+            i += 1
         if request.user.is_authenticated:
             if NoteLog.objects.filter(user=request.user, note=n).exists():
                 # if NoteLog.objects.filter(user=request.user, note=n).latest("created_at").note != n:
@@ -134,10 +143,26 @@ def note(request, note_id):
         return render(request, 'main/note.html', data)
 
 
+def ordering(request, note_id):
+    if request.method == 'POST':
+        n = get_object_or_404(Note, id=note_id)
+        texts = Text.objects.filter(note=n).order_by('order', '-id')
+        orders = request.POST.getlist('all_order[]')
+        ids = request.POST.getlist('all_id[]')
+        for i in range(len(texts)):
+            text = get_object_or_404(texts, id=ids[i])
+            text.order = i
+            text.save()
+
+        return JsonResponse({"Response is": "OK"})
+    else:
+        return Http404
+
+
 def PDFView(request, note_id):
     if Note.objects.filter(id=note_id).exists():
         n = Note.objects.get(pk=note_id)
-        texts = Text.objects.filter(note=n).order_by('-id')
+        texts = Text.objects.filter(note=n).order_by('order', '-id')
         buffer = io.BytesIO()
         p = canvas.Canvas(buffer, pagesize=A4)
         p.setTitle(n.title + ".pdf")
