@@ -18,7 +18,8 @@
                     <small class="text-muted">スペルミスに注意! 誤った単語や意味を覚えないで!</small>
                     <form id="ajax-add-text" action="{% url 'main:note' note_id=id %}" method="POST" name="add_text">
                         {% bootstrap_form form layout='horizontal' %}
-                        <button class="btn btn-primary w-50" type="submit">作成/次に進む</button>
+                        <button class="btn btn-primary w-25 maker" type="submit" value="first">一番前に作成</button>
+                        <button class="btn btn-primary w-25 maker" type="submit" value="last">一番後ろに作成</button>
                         {% csrf_token %}
                     </form>
                 </div>

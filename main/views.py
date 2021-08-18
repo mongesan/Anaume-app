@@ -68,6 +68,7 @@ def note(request, note_id):
     if request.method == 'POST':
         if request.POST.get('name') == "add_text":
             form = TextForm(request.POST)
+            index = request.POST.get('index')
             if form.is_valid:
                 text = form.save(commit=False)
                 words = text.sentence.replace('　', ' ').replace('/', '')
@@ -75,7 +76,13 @@ def note(request, note_id):
                 text.if_hide = ['N'] * len(text.words)
                 text.note = get_object_or_404(Note, pk=note_id)
                 if Text.objects.filter(note=text.note).exists():
-                    text.order = Text.objects.filter(note=text.note).order_by('order').last().order + 1
+                    if index == "first":
+                        for t in Text.objects.filter(note=text.note):
+                            t.order += 1
+                            t.save()
+                        text.order = 0
+                    else:
+                        text.order = Text.objects.filter(note=text.note).order_by('order').last().order + 1
                 else:
                     text.order = 0
                 text.save()
@@ -86,7 +93,6 @@ def note(request, note_id):
                     'words': words.split(' '),
                 }
                 return JsonResponse(data)
-        # elif request.POST.get('name') == "add_check":
         elif request.POST.get('name') == "add_check":
             hides = request.POST.getlist('checks[]')
             hides = ["Y" if h == "true" else "N" for h in hides]
@@ -240,7 +246,6 @@ def delete_text(request, text_id):
     n = t.note
     if n.user == request.user:
         t.delete()
-        messages.error(request, 'メッセージのテスト')
     return redirect('main:note', n.id)
 
 
