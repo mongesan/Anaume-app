@@ -49,11 +49,11 @@
                    class="my-2 btn btn-sm btn-outline-secondary float-right">パスワードの変更</a>
             </li>
             <li class="list-group-item py-0">
-                <a href="{% url 'account:index' %}"
+                <a href="{% url 'main:history_del' %}" methods="POST"
                    class="my-2 btn btn-sm btn-outline-danger float-right">閲覧履歴の削除</a>
             </li>
             <li class="list-group-item py-0">
-                <a href="{% url 'account:index' %}" class="my-2 btn btn-sm btn-outline-danger float-right">退会</a>
+                <a href="{% url 'account:delete_user' %}" class="my-2 btn btn-sm btn-outline-danger float-right">退会</a>
             </li>
         </ul>
 

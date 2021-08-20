@@ -7,15 +7,24 @@
 {% block content %}
     <h1>お気に入りの英文帳</h1>
     <ul class="list-group">
-        {% for fav in favs %}
-            <li class="list-group-item px-5 py-3">
-                <button class="btn-fav border-0" formaction="{% url 'main:fav_note' note_id=fav.note.id %}">
-                    <i class="fas fa-star"></i>
-                </button>
-                <a href="{% url 'main:note' fav.note.id %}">{{ fav.note.title }}</a>
-                <small class="text-muted">({{ fav.note.user.username }})</small>
+        {% if favs|length == 0 %}
+            <li class="list-group-item py-3 px-5">
+                ここにはまだ何もないようです...
             </li>
-        {% endfor %}
+            <li class="list-group-item py-3 px-5">
+                <a class="btn btn-secondary float-right" href="{{ request.META.HTTP_REFERER }}">戻る</a>
+            </li>
+        {% else %}
+            {% for fav in favs %}
+                <li class="list-group-item px-5 py-3">
+                    <button class="btn-fav border-0" formaction="{% url 'main:fav_note' note_id=fav.note.id %}">
+                        <i class="fas fa-star"></i>
+                    </button>
+                    <a href="{% url 'main:note' fav.note.id %}">{{ fav.note.title }}</a>
+                    <small class="text-muted">({{ fav.note.user.username }})</small>
+                </li>
+            {% endfor %}
+        {% endif %}
     </ul>
 {% endblock content %}
 

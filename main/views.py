@@ -148,7 +148,7 @@ def note(request, note_id):
         }
         return render(request, 'main/note.html', data)
 
-
+@login_required
 def ordering(request, note_id):
     if request.method == 'POST':
         n = get_object_or_404(Note, id=note_id)
@@ -234,6 +234,7 @@ def PDFView(request, note_id):
         return Http404
 
 
+@login_required
 def delete_note(request, note_id):
     n = get_object_or_404(Note, id=note_id)
     if n.user == request.user:
@@ -241,6 +242,7 @@ def delete_note(request, note_id):
     return redirect('main:mynote')
 
 
+@login_required
 def delete_text(request, text_id):
     t = get_object_or_404(Text, id=text_id)
     n = t.note
@@ -249,6 +251,7 @@ def delete_text(request, text_id):
     return redirect('main:note', n.id)
 
 
+@login_required
 def fav_note(request, note_id):
     if request.method == "POST":
         if Note.objects.filter(id=note_id).exists():
@@ -264,3 +267,9 @@ def fav_note(request, note_id):
         return Http404
     else:
         return Http404
+
+
+@login_required
+def delete_log(request):
+    NoteLog.objects.filter(user=request.user).delete()
+    return redirect(request.META['HTTP_REFERER'])

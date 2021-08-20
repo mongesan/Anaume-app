@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from main.models import Note, Text
+from main.models import Note, Text, User
 
 
 @login_required
@@ -37,6 +37,11 @@ def signup(request):
     return render(request, 'account/signup.html', {'form': form, 'user': request.user, })
 
 
-# def login(request):
-#     if request.method == 'POST':
-#         form =
+@login_required
+def delete_user(request):
+    if request.method == 'POST':
+        User.objects.filter(username=request.user.username).delete()
+        logout(request)
+        return redirect('main:index')
+    else:
+        return render(request, 'account/delete_user.html')

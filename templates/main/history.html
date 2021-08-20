@@ -9,16 +9,29 @@
     <h1>閲覧履歴</h1>
     <small class="text-muted">最新 {{ logs|length }}件を表示中</small>
     <ul class="list-group">
-        {% for log in logs %}
-            <li class="list-group-item px-5 py-3">
-                <button class="btn-fav border-0" formaction="{% url 'main:fav_note' note_id=log.note.id %}">
-                    <i class="{% note_to_fav user log.note %} fa-star"></i>
-                </button>
-                <a href="{% url 'main:note' log.note.id %}">{{ log.note.title }}</a>
-                <small class="text-muted">({{ log.note.user.username }})</small>
-                <small class="text-muted float-right">{{ log.created_at }}</small>
+        {% if logs|length == 0 %}
+            <li class="list-group-item py-3 px-5">
+                ここにはまだ何もないようです...
             </li>
-        {% endfor %}
+            <li class="list-group-item py-3 px-5">
+                <a class="btn btn-secondary float-right" href="{{ request.META.HTTP_REFERER }}">戻る</a>
+            </li>
+        {% else %}
+            {% for log in logs %}
+                <li class="list-group-item px-5 py-3">
+                    <button class="btn-fav border-0" formaction="{% url 'main:fav_note' note_id=log.note.id %}">
+                        <i class="{% note_to_fav user log.note %} fa-star"></i>
+                    </button>
+                    <a href="{% url 'main:note' log.note.id %}">{{ log.note.title }}</a>
+                    <small class="text-muted">({{ log.note.user.username }})</small>
+                    <small class="text-muted float-right">{{ log.created_at }}</small>
+                </li>
+            {% endfor %}
+            <li class="list-group-item py-0">
+                <a href="{% url 'main:history_del' %}" methods="POST"
+                   class="my-2 btn btn-sm btn-outline-danger float-right">閲覧履歴の削除</a>
+            </li>
+        {% endif %}
     </ul>
 {% endblock content %}
 

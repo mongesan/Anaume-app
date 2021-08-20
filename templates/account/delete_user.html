@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% load note_to_fav %}
+{% load django_bootstrap5 %}
+{% block extra_css %}{% endblock %}
+{% block title %}退会 - Anaume.app{% endblock title %}
+{% block content %}
+    <h1>退会</h1>
+    <div class="card my-5 text-center mx-auto">
+        <div class="card-header">
+            <h5 class="card-title my-0">アカウントの削除</h5>
+        </div>
+        <div class="card-body">
+            <p>本当にアカウントを削除しますか？<br>
+                登録されている英文帳、お気に入り情報は全て削除されます。</p>
+            <a href="{% url 'main:index' %}" class="btn btn-secondary w-25">
+                戻る
+            </a>
+            <button type="button" class="btn btn-outline-danger w-25" data-toggle="modal" data-target="#exampleModal">
+                退会
+            </button>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">最終確認</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    退会しても本当によろしいですか?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
+                    <form action="{% url 'account:delete_user' %}" method="post">
+                        <input type="hidden">
+                        <button type="submit" class="btn btn-outline-danger">退会</button>
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+
+{% endblock %}
