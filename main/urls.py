@@ -9,6 +9,7 @@ urlpatterns = [
     path('note/<int:note_id>', views.note, name='note'),
     path('note/fav/<int:note_id>', views.fav_note, name="fav_note"),
     path('note/delete/<int:note_id>', views.delete_note, name="delete_note"),
+    path('note/search', views.NoteSearch.as_view(), name='search_note'),
     path('text/delete/<int:text_id>', views.delete_text, name="delete_text"),
     path('pdf/<int:note_id>', views.PDFView, name='PDFView'),
     path('favorite', views.favorite, name='favorite'),

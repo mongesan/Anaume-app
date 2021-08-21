@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import ListView
+from django.db.models import Q
 from main.models import Note, Text, Fav, NoteLog
 from main.forms import NoteForm, TextForm
 from reportlab.pdfgen import canvas
@@ -12,6 +13,24 @@ from reportlab.lib.pagesizes import A4, portrait
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 from reportlab.lib.units import mm
+
+
+class NoteSearch(ListView):
+    template_name = 'main/search.html'
+    context_object_name = 'note_search'
+    queryset = Note.objects.order_by('-id')
+    model = Note
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = Note.objects.order_by('-id')
+        query = self.request.GET.get('query')
+
+        if query:
+            queryset = queryset.filter(
+                Q(title__icontains=query)
+            )
+        return queryset
 
 
 def index(request):
@@ -273,3 +292,6 @@ def fav_note(request, note_id):
 def delete_log(request):
     NoteLog.objects.filter(user=request.user).delete()
     return redirect(request.META['HTTP_REFERER'])
+
+
+

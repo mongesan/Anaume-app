@@ -49,7 +49,7 @@
                         お気に入り0件
                     </li>
                     <a href="{% url 'main:mynote' %}">英文帳を作成してみよう</a>
-                    <a href="{% url 'main:mynote' %}">英文帳を検索してみる</a>
+                    <a href="{% url 'main:search_note' %}">英文帳を検索してみる</a>
                 {% else %}
                     <li onclick="location.href='{% url 'main:favorite' %}'"
                         class="list-group-item list-group-item-warning list-group-item-action" style="cursor: pointer">

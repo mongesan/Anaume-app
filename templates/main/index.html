@@ -56,90 +56,120 @@
             {% endif %}
 
         </ul>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'main:search_note' %}" method="GET">
+            <input class="form-control mr-sm-2" type="search" name="query" value="{{ request.GET.query }}"
+                   placeholder="英文帳の検索" aria-label="Search" required>
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </div>
 </nav>
 <div class="container-fluid">
-        <div class="row bg-white w-100 mx-auto py-4">
-            <div class="col-sm-1 d-none d-sm-flex align-items-center">
-                <p class="circle" style="background: #999999"></p>
-            </div>
-            <div class="col-sm-5 d-flex align-items-center">
-                <h1 style="font-size: 45px">
-                    <input class="d-none check_box" type="checkbox" id="test" name="scales">
-                    <label class="toggle" for="test">穴埋め式</label>
-                    の記憶法で<br>早く、簡単に、英文を覚えよう
-                </h1>
-            </div>
-            <div class="col-sm-6 d-flex align-items-center">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item py-0">
-                        <small class="text-muted">(例文)</small>
-                    </li>
-                    <li class="list-group-item">
-                        <input class="d-none check_box" type="checkbox" id="t131w0" name="scales" checked="">
-                        <label class="toggle" for="t131w0">In</label>
-                        <input class="d-none check_box" type="checkbox" id="t131w1" name="scales" checked="">
-                        <label class="toggle" for="t131w1">short,</label>
-                        the
-                        <input class="d-none check_box" type="checkbox" id="t131w3" name="scales" checked="">
-                        <label class="toggle" for="t131w3">purpose</label>
-                        of
-                        the
-                        <input class="d-none check_box" type="checkbox" id="t131w6" name="scales" checked="">
-                        <label class="toggle" for="t131w6">regulation</label>
-                        is
-                        to
-                        <input class="d-none check_box" type="checkbox" id="t131w9" name="scales" checked="">
-                        <label class="toggle" for="t131w9">protect</label>
-                        <input class="d-none check_box" type="checkbox" id="t131w10" name="scales" checked="">
-                        <label class="toggle" for="t131w10">domestic</label>
-                        industries.
-                        <br>
-                        要するに、その規制の目的は国内産業の保護だ。
-                    </li>
-                    <li class="list-group-item d-none d-lg-block">
-                        In
-                        order
-                        to
-                        <input class="d-none check_box" type="checkbox" id="t130w3" name="scales" checked="">
-                        <label class="toggle" for="t130w3">keep</label>
-                        <input class="d-none check_box" type="checkbox" id="t130w4" name="scales" checked="">
-                        <label class="toggle" for="t130w4">up</label>
-                        its
-                        <input class="d-none check_box" type="checkbox" id="t130w6" name="scales" checked="">
-                        <label class="toggle" for="t130w6">competitiveness</label>
-                        in
-                        the
-                        world,
-                        Japan
-                        must
-                        <input class="d-none check_box" type="checkbox" id="t130w12" name="scales" checked="">
-                        <label class="toggle" for="t130w12">under</label>
-                        <input class="d-none check_box" type="checkbox" id="t130w13" name="scales" checked="">
-                        <label class="toggle" for="t130w13">take</label>
-                        <input class="d-none check_box" type="checkbox" id="t130w14" name="scales" checked="">
-                        <label class="toggle" for="t130w14">sweeping</label>
-                        <input class="d-none check_box" type="checkbox" id="t130w15" name="scales" checked="">
-                        <label class="toggle" for="t130w15">deregulation</label>
-                        <input class="d-none check_box" type="checkbox" id="t130w16" name="scales" checked="">
-                        <label class="toggle" for="t130w16">in</label>
-                        <input class="d-none check_box" type="checkbox" id="t130w17" name="scales" checked="">
-                        <label class="toggle" for="t130w17">earnest.</label>
-                        <br>
-                        世界での競争力を維持するためには、日本は大幅な規制緩和に真剣に着手しなければならない。
-                    </li>
-                </ul>
-            </div>
-            <div class="text-center w-100 mt-4">
-                <a href="{% url 'account:signup' %}" class="btn btn-success mb-2">サインアップして作成!</a>
-                <a href="{% url 'account:login' %}" class="btn btn-secondary mb-2">ログイン</a>
-            </div>
+    <div class="row bg-white w-100 mx-auto py-4">
+        <div class="col-sm-1 d-none d-sm-flex align-items-center">
+            <p class="circle" style="background: #999999"></p>
         </div>
+        <div class="col-sm-5 d-flex align-items-center">
+            <h1 style="font-size: 45px">
+                <input class="d-none check_box" type="checkbox" id="test" name="scales">
+                <label class="toggle" for="test">穴埋め式</label>
+                の記憶法で<br>早く、簡単に、英文を覚えよう
+            </h1>
+        </div>
+        <div class="col-sm-6 d-flex align-items-center">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item py-0">
+                    <small class="text-muted">(例文)</small>
+                </li>
+                <li class="list-group-item">
+                    <input class="d-none check_box" type="checkbox" id="t131w0" name="scales" checked="">
+                    <label class="toggle" for="t131w0">In</label>
+                    <input class="d-none check_box" type="checkbox" id="t131w1" name="scales" checked="">
+                    <label class="toggle" for="t131w1">short,</label>
+                    the
+                    <input class="d-none check_box" type="checkbox" id="t131w3" name="scales" checked="">
+                    <label class="toggle" for="t131w3">purpose</label>
+                    of
+                    the
+                    <input class="d-none check_box" type="checkbox" id="t131w6" name="scales" checked="">
+                    <label class="toggle" for="t131w6">regulation</label>
+                    is
+                    to
+                    <input class="d-none check_box" type="checkbox" id="t131w9" name="scales" checked="">
+                    <label class="toggle" for="t131w9">protect</label>
+                    <input class="d-none check_box" type="checkbox" id="t131w10" name="scales" checked="">
+                    <label class="toggle" for="t131w10">domestic</label>
+                    industries.
+                    <br>
+                    要するに、その規制の目的は国内産業の保護だ。
+                </li>
+                <li class="list-group-item d-none d-lg-block">
+                    In
+                    order
+                    to
+                    <input class="d-none check_box" type="checkbox" id="t130w3" name="scales" checked="">
+                    <label class="toggle" for="t130w3">keep</label>
+                    <input class="d-none check_box" type="checkbox" id="t130w4" name="scales" checked="">
+                    <label class="toggle" for="t130w4">up</label>
+                    its
+                    <input class="d-none check_box" type="checkbox" id="t130w6" name="scales" checked="">
+                    <label class="toggle" for="t130w6">competitiveness</label>
+                    in
+                    the
+                    world,
+                    Japan
+                    must
+                    <input class="d-none check_box" type="checkbox" id="t130w12" name="scales" checked="">
+                    <label class="toggle" for="t130w12">under</label>
+                    <input class="d-none check_box" type="checkbox" id="t130w13" name="scales" checked="">
+                    <label class="toggle" for="t130w13">take</label>
+                    <input class="d-none check_box" type="checkbox" id="t130w14" name="scales" checked="">
+                    <label class="toggle" for="t130w14">sweeping</label>
+                    <input class="d-none check_box" type="checkbox" id="t130w15" name="scales" checked="">
+                    <label class="toggle" for="t130w15">deregulation</label>
+                    <input class="d-none check_box" type="checkbox" id="t130w16" name="scales" checked="">
+                    <label class="toggle" for="t130w16">in</label>
+                    <input class="d-none check_box" type="checkbox" id="t130w17" name="scales" checked="">
+                    <label class="toggle" for="t130w17">earnest.</label>
+                    <br>
+                    世界での競争力を維持するためには、日本は大幅な規制緩和に真剣に着手しなければならない。
+                </li>
+            </ul>
+        </div>
+        <div class="text-center w-100 mt-4">
+            <a href="{% url 'account:signup' %}" class="btn btn-success mb-2">サインアップして作成!</a>
+            <a href="{% url 'account:login' %}" class="btn btn-secondary mb-2">ログイン</a>
+        </div>
+    </div>
     <div class="row w-100 mx-auto">
         <div class="col-lg-6 p-3 border border-bottom-0 border-primary">
             <p class="circle" style="background: #999999"></p>
             <h2>サンプルを見る</h2>
-            Some sample here...
+            <div class="d-inline-flex flex-wrap flex-row justify-content-center w-100">
+                <div class="note py-2 mx-2 mb-3 row"
+                     onclick="location.href='#'"
+                     title="この英文帳を閲覧・編集">
+                    <div class="col-1 d-flex align-items-center" style="min-width: 50px; min-height: 50px">
+                        <p class="circle"></p>
+                    </div>
+                    <div class="col-9 px-0 d-flex align-items-center">
+                        <p>
+                            タイトル:<a href="#"> Sample1</a>
+                            <br>作成者: sakamoto
+                    </div>
+                </div>
+                <div class="note py-3 mx-3 mb-4 row d-none d-lg-flex"
+                     onclick="location.href='#'"
+                     title="この英文帳を閲覧・編集">
+                    <div class="col-1 d-flex align-items-center" style="min-width: 50px; min-height: 50px">
+                        <p class="circle"></p>
+                    </div>
+                    <div class="col-9 px-0 d-flex align-items-center">
+                        <p>
+                            タイトル:<a href="#"> Sample2</a>
+                            <br>作成者: sakamoto
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-lg-6 bg-success text-white p-3">
             <p class="circle" style="background: #999999"></p>
@@ -154,8 +184,15 @@
     <div class="row w-100 mx-auto">
         <div class="col-lg-6 p-3 border border-top-0 border-primary">
             <p class="circle" style="background: #999999"></p>
-            <h2>英文帳を検索する</h2>
-            Search for note here...
+            <h3>英文帳を探す</h3>
+            <form action="{% url 'main:search_note' %}" method="get" class="text-center">
+                    <div class="form-group">
+                        <input class="form-control" value="{{ request.GET.query }}"
+                               name="query" type="text"
+                               placeholder="英文帳の検索" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-50">検索</button>
+            </form>
         </div>
         <div class="col-lg-6 bg-dark text-white p-3">
             <p class="circle" style="background: #999999"></p>
