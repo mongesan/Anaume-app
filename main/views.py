@@ -167,6 +167,7 @@ def note(request, note_id):
         }
         return render(request, 'main/note.html', data)
 
+
 @login_required
 def ordering(request, note_id):
     if request.method == 'POST':
@@ -206,15 +207,18 @@ def PDFView(request, note_id):
         for text in texts:
             s = ""
             for j in range(len(text.words)):
+                word = text.words[j]
                 if text.if_hide[j] == 'Y':
                     s += "(    )"
-                    if text.words[j][-1] in ['.', '/', ',', '!', '?', '"', "'"]:
-                        s += text.words[j][-1].replace('/', ',')
-                    if len(text.words[j]) >= 2:
-                        if text.words[j][-2] in ['.', '/', ',', '!', '?', '"', "'"]:
-                            s += text.words[j][-2].replace('/', ',')
+                    if word[0] in ['"', "'"] and len(word) > 2:
+                        s = word[0] + s
+                    if word[-1] in ['.', '/', ',', '!', '?', '"', "'"]:
+                        s += word[-1].replace('/', ',')
+                    if len(word) >= 2:
+                        if word[-2] in ['.', '/', ',', '!', '?', '"', "'"]:
+                            s += word[-2].replace('/', ',')
                 else:
-                    s += text.words[j].replace('/', ',')
+                    s += word.replace('/', ',')
                 s += " "
             p.drawString(25, pos, str(i) + ".")
             p.drawString(25, pos-20, s)
@@ -238,8 +242,19 @@ def PDFView(request, note_id):
             s = ""
             for k in range(len(text.words)):
                 if text.if_hide[k] == 'Y':
-                    s += text.words[k].replace('/', ',') + " / "
-            p.drawString(25, pos, str(i) + '.' + s)
+                    w = text.words[k].replace('/', ',')
+                    if w[0] in ['"', "'"]:
+                        w = w[1:]
+                    if len(w) != 0:
+                        if w[-1] in ['.', '/', ',', '!', '?', '"', "'"]:
+                            w = w[:-1]
+                            if len(w) != 0:
+                                if w[-1] in ['.', '/', ',', '!', '?', '"', "'"]:
+                                    w = w[:-1]
+                    s += w + ' / '
+            if len(s) != 0:
+                s = s[:-3]
+            p.drawString(25, pos, str(i) + '. ' + s)
             pos -= 20
             i += 1
             if pos < 40:

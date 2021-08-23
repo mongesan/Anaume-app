@@ -103,12 +103,13 @@
                         {% for word in text.words %}
                             {% access_list text.if_hide forloop.counter0 as hide %}
                             {% if hide == 'Y' %}
+                                {{ word|to_comma|prohibit_first }}
                                 <input class="d-none check_box" type="checkbox"
                                        id="t{{ text.id }}w{{ forloop.counter0 }}"
                                        name="scales" checked>
                                 <label class="toggle"
                                        for="t{{ text.id }}w{{ forloop.counter0 }}">{{ word|to_comma|prohibit_exc }}</label>
-                                {{ word|to_comma|prohibit }}
+                                {{ word|to_comma|prohibit_last }}
                             {% else %}
                                 {{ word|to_comma }}
                             {% endif %}
