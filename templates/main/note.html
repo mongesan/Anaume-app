@@ -3,6 +3,7 @@
 {% load to_comma %}
 {% load access_list %}
 {% load django_bootstrap5 %}
+{% load prohibit %}
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/note.css' %}">{% endblock %}
 {% block title %}Anaume - {{ note.title }}{% endblock title %}
@@ -83,7 +84,6 @@
             <ul class="list-group list-group-flush" id="note-list">
                 {% for text in texts %}
                     <li class="list-group-item" value="{{ text.order }}" id="{{ text.id }}">
-                        {#                        <span class="handle" style="font-size: 20px"><i class="fas fa-sort"></i></span>#}
                         <div class="text-right position-relative">
                             <button class="btn btn-sm btn-outline-secondary mr-lg-3 copy-btn"
                                     data-clipboard-text="{{ text.sentence }} {{ text.translation }}"
@@ -107,7 +107,8 @@
                                        id="t{{ text.id }}w{{ forloop.counter0 }}"
                                        name="scales" checked>
                                 <label class="toggle"
-                                       for="t{{ text.id }}w{{ forloop.counter0 }}">{{ word|to_comma }}</label>
+                                       for="t{{ text.id }}w{{ forloop.counter0 }}">{{ word|to_comma|prohibit_exc }}</label>
+                                {{ word|to_comma|prohibit }}
                             {% else %}
                                 {{ word|to_comma }}
                             {% endif %}

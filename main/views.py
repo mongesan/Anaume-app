@@ -208,8 +208,11 @@ def PDFView(request, note_id):
             for j in range(len(text.words)):
                 if text.if_hide[j] == 'Y':
                     s += "(    )"
-                    if text.words[j][-1] in ['.', '/', ',', '!', '?']:
+                    if text.words[j][-1] in ['.', '/', ',', '!', '?', '"', "'"]:
                         s += text.words[j][-1].replace('/', ',')
+                    if len(text.words[j]) >= 2:
+                        if text.words[j][-2] in ['.', '/', ',', '!', '?', '"', "'"]:
+                            s += text.words[j][-2].replace('/', ',')
                 else:
                     s += text.words[j].replace('/', ',')
                 s += " "

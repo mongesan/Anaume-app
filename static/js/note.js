@@ -50,13 +50,28 @@ $("form#ajax-add-text").on('submit', e => {
             // console.log(words)
             let i = 0
             $("#STEP2").removeClass("opacity");
+            const prohibition = ['.', '/', ',', '!', '?', '"', "'"];
             $.each(words, function (index, elem) {
-                box_id = String(aid) + '_' + String(i)
-                $('<input class="d-none check_box" type="checkbox" id=' + box_id + ' name="check[]">' + '<label class="toggle" for=' + box_id + '>' + elem + '</label>' + '<span> </span>').appendTo('#ajax-checkbox-text');
+                let box_id = String(aid) + '_' + String(i)
+                let len = elem.length;
+                let last = "";
+                // console.log(prohibition.indexOf(elem.charAt(len - 1)))
+                if (prohibition.indexOf(elem.charAt(len - 1)) >= 0 ) {
+                    last = elem.charAt(len - 1);
+                    elem = elem.slice(0, len - 1);
+                    if (len >= 1) {
+                        if (prohibition.indexOf(elem.charAt(len - 1)) >=0 ) {
+                            last = elem.charAt(len - 1) + last
+                            elem.slice(0, len - 1);
+                        }
+                    }
+                }
+                console.log(last)
+                $('<input class="d-none check_box" type="checkbox" id=' + box_id + ' name="check[]">' + '<label class="toggle" for=' + box_id + '>' + elem + '</label>' + '<span> '+ last +' </span>').appendTo('#ajax-checkbox-text');
                 i += 1
             });
             $('<br><button type="submit" class="btn btn-success w-50"><i class="fas fa-check mx-1"></i>穴埋め</button>' + '{% csrf_token %}').appendTo('#ajax-checkbox-text');
-            if (form.val() === "first"){
+            if (form.val() === "first") {
                 $(".list-group").prepend("<li class=\"list-group-item\" id=\"" + String(aid) + "\"></li>")
             } else {
                 $(".list-group").append("<li class=\"list-group-item\" id=\"" + String(aid) + "\"></li>")
