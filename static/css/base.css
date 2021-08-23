@@ -48,6 +48,7 @@ body {
     background-repeat: no-repeat;
     box-shadow: 0 10px 0 #777777;
     opacity: 1;
+    transition: all 0.3s;
 }
 
 .note:hover{
@@ -124,4 +125,8 @@ input#name_change:checked ~ .name_change_form,input#select:checked ~ .note_selec
 
 .btn-fav:active{
     opacity: 0.8;
+}
+
+.nav-link{
+    transition: all 0.3s;
 }

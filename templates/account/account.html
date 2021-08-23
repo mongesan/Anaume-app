@@ -13,14 +13,14 @@
         <div class="col-md-5 d-flex align-items-center justify-content-center text-center text-md-left border-right border-left">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item py-0">
-                    <h4 class="my-2">ユーザー名: {{ user.get_username }}</h4>
+                    <h4 class="my-2"><i class="fas fa-user-circle mr-1"></i>ユーザー名: {{ user.get_username }}</h4>
                 </li>
                 <li class="list-group-item py-0">
-                    <a href="{% url 'account:logout' %}" class="my-2 btn btn-sm btn-secondary">ユーザー名の変更</a>
+                    <a href="{% url 'account:logout' %}" class="my-2 btn btn-sm btn-secondary"><i class="fas fa-pen mr-1"></i>ユーザー名の変更</a>
                 </li>
                 <li class="list-group-item py-0">
-                    <a href="{% url 'main:favorite' %}" class="my-2 btn btn-sm btn-warning">お気に入りの英文帳</a>
-                    <a href="{% url 'main:history' %}" class="my-2 btn btn-sm btn-success">閲覧履歴</a>
+                    <a href="{% url 'main:favorite' %}" class="my-2 btn btn-sm btn-warning"><i class="fas fa-star mr-1"></i>お気に入りの英文帳</a>
+                    <a href="{% url 'main:history' %}" class="my-2 btn btn-sm btn-success"><i class="fas fa-history mr-1"></i>閲覧履歴</a>
                 </li>
             </ul>
         </div>
@@ -41,19 +41,19 @@
             </ul>
         </div>
         <div class="col-md-3 d-flex align-items-center justify-content-center">
-            <a href="{% url 'main:mynote' %}" class="btn btn-primary px-5 py-4 my-4 font-weight-bold">マイ英文帳ページ<br>作成・閲覧・印刷</a>
+            <a href="{% url 'main:mynote' %}" class="btn btn-primary px-5 py-4 my-4 font-weight-bold"><i class="fas fa-sticky-note"></i>マイ英文帳ページ<br>作成・閲覧・印刷</a>
         </div>
         <ul class="list-group list-group-flush col-md-12 px-0 border-top">
             <li class="list-group-item py-0">
                 <a href="{% url 'account:password_change' %}"
-                   class="my-2 btn btn-sm btn-outline-secondary float-right">パスワードの変更</a>
+                   class="my-2 btn btn-sm btn-outline-secondary float-right"><i class="fas fa-key mr-2"></i>パスワードの変更</a>
             </li>
             <li class="list-group-item py-0">
                 <a href="{% url 'main:history_del' %}" methods="POST"
-                   class="my-2 btn btn-sm btn-outline-danger float-right">閲覧履歴の削除</a>
+                   class="my-2 btn btn-sm btn-outline-danger float-right"><i class="fas fa-trash-alt mr-2"></i>閲覧履歴の削除</a>
             </li>
             <li class="list-group-item py-0">
-                <a href="{% url 'account:delete_user' %}" class="my-2 btn btn-sm btn-outline-danger float-right">退会</a>
+                <a href="{% url 'account:delete_user' %}" class="my-2 btn btn-sm btn-outline-danger float-right"><i class="fas fa-user-minus mr-2"></i>退会</a>
             </li>
         </ul>
 

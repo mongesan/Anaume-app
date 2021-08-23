@@ -11,18 +11,18 @@
         <div class="col-md-5 d-flex align-items-center justify-content-center text-center text-md-left border-right border-left">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item py-0">
-                    <h4 class="my-2">{{ user.get_username }}でログイン中です</h4>
+                    <h4 class="my-2"><i class="fas fa-user-circle mx-1"></i>{{ user.get_username }}でログイン中です</h4>
                 </li>
                 <li class="list-group-item py-0">
-                    <a href="{% url 'account:logout' %}" class="my-2 btn btn-sm btn-danger">ログアウトする</a>
+                    <a href="{% url 'account:logout' %}" class="my-2 btn btn-sm btn-danger"><i class="fas fa-sign-out-alt mx-1"></i>ログアウトする</a>
                 </li>
                 <li class="list-group-item py-0">
-                    <a href="{% url 'account:index' %}" class="my-2 btn btn-sm btn-secondary">アカウントの管理</a>
+                    <a href="{% url 'account:index' %}" class="my-2 btn btn-sm btn-secondary"><i class="fas fa-cog mx-1"></i>アカウントの管理</a>
                 </li>
             </ul>
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-center">
-            <a href="{% url 'main:mynote' %}" class="btn btn-primary px-5 py-4 my-4 font-weight-bold">マイ英文帳ページ<br>作成・閲覧・印刷</a>
+            <a href="{% url 'main:mynote' %}" class="btn btn-primary px-5 py-4 my-4 font-weight-bold"><i class="fas fa-bookmark mr-1"></i>マイ英文帳ページ<br>作成・閲覧・印刷</a>
         </div>
     </div>
     <div class="row w-100 mx-auto d-flex justify-content-around">

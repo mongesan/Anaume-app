@@ -13,20 +13,11 @@
             <form id="ajax-add-note" action="{% url 'main:mynote' %}" method="POST">
                 {#    <input type="text" id="id_title" required>#}
                 {% bootstrap_form note_form layout='horizontal' %}
-                <button class="btn btn-primary w-50" type="submit">作成</button>
+                <button class="btn btn-primary w-50" type="submit"><i class="fas fa-bookmark mr-1"></i>作成</button>
                 {% csrf_token %}
             </form>
         </div>
     </div>
-{#    <label for="select" class="btn btn-sm btn-secondary mt-3 mx-auto" style="width: 200px">英文帳の複数選択/削除</label>#}
-{#    <input class="d-none" type="checkbox" id="select">#}
-{#    <div class="note_select_form text-center">#}
-{#        <button class="btn btn-sm btn-danger mb-3">削除</button>#}
-{#        <label for="select" class="btn btn-sm btn-secondary mb-3">戻る</label>#}
-{#        <form>#}
-{##}
-{#        </form>#}
-{#    </div>#}
     <h3>一覧表示</h3>
     <div class="notes text-center">
         <div class="d-inline-flex flex-wrap flex-row justify-content-center">

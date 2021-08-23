@@ -55,7 +55,7 @@ $("form#ajax-add-text").on('submit', e => {
                 $('<input class="d-none check_box" type="checkbox" id=' + box_id + ' name="check[]">' + '<label class="toggle" for=' + box_id + '>' + elem + '</label>' + '<span> </span>').appendTo('#ajax-checkbox-text');
                 i += 1
             });
-            $('<br><button type="submit" class="btn btn-success w-50">穴埋め</button>' + '{% csrf_token %}').appendTo('#ajax-checkbox-text');
+            $('<br><button type="submit" class="btn btn-success w-50"><i class="fas fa-check mx-1"></i>穴埋め</button>' + '{% csrf_token %}').appendTo('#ajax-checkbox-text');
             if (form.val() === "first"){
                 $(".list-group").prepend("<li class=\"list-group-item\" id=\"" + String(aid) + "\"></li>")
             } else {

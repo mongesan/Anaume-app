@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{% static 'css/note.css' %}">{% endblock %}
 {% block title %}Anaume - {{ note.title }}{% endblock title %}
 {% block content %}
-    {#    THERE ARE NOTE#{{ id }}#}
     <h1>英文帳ページ</h1>
     {% if note.user.username == user.get_username %}
         <div class="card mt-4 mx-auto w-100 text-center border-primary">
@@ -18,8 +17,8 @@
                     <small class="text-muted">スペルミスに注意! 誤った単語や意味を覚えないで!</small>
                     <form id="ajax-add-text" action="{% url 'main:note' note_id=id %}" method="POST" name="add_text">
                         {% bootstrap_form form layout='horizontal' %}
-                        <button class="btn btn-primary w-25 maker" type="submit" value="first">一番前に作成</button>
-                        <button class="btn btn-primary w-25 maker" type="submit" value="last">一番後ろに作成</button>
+                        <button class="btn btn-primary w-25 maker" type="submit" value="first"><i class="fas fa-arrow-circle-up mx-1"></i>一番上に作成</button>
+                        <button class="btn btn-primary w-25 maker" type="submit" value="last">一番下に作成<i class="fas fa-arrow-circle-down mx-1"></i></button>
                         {% csrf_token %}
                     </form>
                 </div>
@@ -37,7 +36,7 @@
             <div class="card-body bg-success text-white hiddenNoteID" id="{{ note.id }}">
             {% if user.is_authenticated %}
                 <div class="text-right position-relative">
-                    <small class="text-white">お気に入りボタン→</small>
+{#                    <small class="text-white">お気に入りボタン→</small>#}
                     <button class="btn-fav position-absolute" style="top:-3px"
                             formaction="{% url 'main:fav_note' note_id=note.id %}"
                             data-toggle="tooltip"
@@ -48,12 +47,6 @@
                             <i class="far fa-star"></i>
                         {% endif %}
                     </button>
-                    {#                    <a class="btn btn-fav position-absolute"><i#}
-                    {#                            class="fas fa-star"></i></a>#}
-                    {#                    <a class="btn btn-success position-absolute" style="top: 40px; background: #06C755"><i#}
-                    {#                            class="fab fa-line"></i></a>#}
-                    {#                    <a class="btn btn-success position-absolute" style="top: 90px; background: #3b5998"><i#}
-                    {#                            class="fab fa-facebook-f"></i></a>#}
                 </div>
             {% endif %}
                 {% if note.user.username == user.username %}
