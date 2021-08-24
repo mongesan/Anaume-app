@@ -13,7 +13,7 @@ HerokuApp: [https://anaume-app.herokuapp.com/](https://anaume-app.herokuapp.com/
 ```sh
 git clone https://github.com/mongesan/Anaume-app
 ```
-\EnglishApp上で
+\EnglishApp上でpythonモジュールをまとめてインストール(要pip)
 ```sh
 pip install -r requirements.txt
 ```
