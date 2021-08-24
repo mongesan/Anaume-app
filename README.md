@@ -23,11 +23,11 @@ python manage.py migrate
 ```
 staticfileの生成
 ```sh
-python manage.py migrate
+python manage.py collectstatic
 ```
 スーパーユーザーの作成(任意)
 ```sh
-python manage.py collectstatic
+python manage.py createsuperuser
 ```
 起動
 ```sh
