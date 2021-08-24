@@ -31,4 +31,6 @@ python manage.py runserver
 ```
 localhost:8000 からアクセスが可能になる
 
-## 構造
+## ページ構成
+
+## 作成後記
