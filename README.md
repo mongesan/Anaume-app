@@ -21,9 +21,13 @@ pip install -r requirements.txt
 ```sh
 python manage.py migrate
 ```
-スーパーユーザーの作成
+staticfileの生成
 ```sh
-python manage.py createsuperuser
+python manage.py migrate
+```
+スーパーユーザーの作成(任意)
+```sh
+python manage.py collectstatic
 ```
 起動
 ```sh
