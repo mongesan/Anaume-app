@@ -14,6 +14,13 @@
                     {{ field.errors }}
                     <hr>
                 {% endfor %}
+                <ul>
+                    <li>ユーザ名は一度登録した後は変更できません。</li>
+                    <li>パスワードは最低8文字以上必要です。</li>
+                    <li>ユーザ名と似たパスワードにはできません。</li>
+                    <li>よく使われるパスワードにはできません。</li>
+                    <li>数字だけのパスワードにはできません。</li>
+                </ul>
                 <button type="submit" class="btn btn-success btn-lg btn-block">サインアップ</button>
                 <input type="hidden" name="next" value="{{ next }}"/>
                 {% csrf_token %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% load django_bootstrap5 %}
+{% block extra_css %}{% endblock %}
+{% block title %}404 NOT FOUND - Anaume.app{% endblock title %}
+
+{% block content %}
+    <div class="text-center">
+        <h1 style="font-size: 60px"><i class="far fa-question-circle"></i></h1>
+        <h1 style="font-family: 'Quicksand', sans-serif"><input class="d-none check_box" type="checkbox" id="test" name="scales">
+                <label class="toggle" for="test">404</label> NOT FOUND</h1>
+        <h6>申し訳ございません。<br>お探しのページは見つかりませんでした。</h6>
+        <a href="{% url 'main:index' %}" class="btn btn-primary my-5">ホームに戻る</a>
+    </div>
+{% endblock content %}
