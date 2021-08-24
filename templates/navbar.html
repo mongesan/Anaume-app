@@ -43,7 +43,7 @@
 
         </ul>
         <form class="form-inline my-2 my-lg-0" action="{% url 'main:search_note' %}" method="GET">
-            <input class="form-control mr-sm-2" type="search" name="query" value="{{ request.GET.query }}" placeholder="英文帳の検索" aria-label="Search" required>
+            <input class="form-control mr-sm-2" type="search" name="query" value="{{ request.GET.query }}" placeholder="英文帳の検索" aria-label="Search">
             <button class="btn btn-success my-2 my-sm-0" type="submit"><span class="d-none d-lg-block">Search</span><i class="fas fa-search d-lg-none"></i></button>
         </form>
     </div>

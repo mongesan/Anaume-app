@@ -3,17 +3,7 @@
 <!DOCTYPE html>{% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
-          integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&family=Roboto:wght@500&display=swap"
-          rel="stylesheet">
-    {% block extra_css %}{% endblock %}
+    {% include 'head.html' %}
     <title>{% block title %}Anaume-app{% endblock %}</title>
 </head>
 <body>
@@ -141,29 +131,24 @@
             <p class="circle" style="background: #999999"></p>
             <h3>英文帳を探す</h3>
             <form action="{% url 'main:search_note' %}" method="get" class="text-center">
-                    <div class="form-group">
-                        <input class="form-control" value="{{ request.GET.query }}"
-                               name="query" type="text"
-                               placeholder="英文帳の検索" required>
-                    </div>
-                    <button type="submit" class="btn btn-success w-50"><i class="fas fa-search mr-2"></i>検索</button>
+                <div class="form-group">
+                    <input class="form-control" value="{{ request.GET.query }}"
+                           name="query" type="text"
+                           placeholder="英文帳の検索">
+                </div>
+                <button type="submit" class="btn btn-success w-50"><i class="fas fa-search mr-2"></i>検索</button>
             </form>
         </div>
         <div class="col-lg-6 bg-dark text-white p-3">
             <p class="circle" style="background: #999999"></p>
-            <h3>このアプリについてもっと知る...</h3>
-            開発日記<br>
-            スライド<br>
-            <h5>アプリを共有して下さい</h5>
-
+            <h3>お問い合わせ</h3>
+            <p>ご要望、ご質問、バグの発見報告等は <a href="mailto:syun1.sakamoto&#64;fuji.waseda.jp">syun1.sakamoto＠fuji.waseda.jp</a>
+                までどうぞ</p>
+            <a class="btn btn-outline-light" href="mailto:syun1.sakamoto&#64;fuji.waseda.jp"><i
+                    class="far fa-envelope mr-2"></i>お問い合わせ</a>
         </div>
     </div>
-    <footer class="pt-4 my-md-4 pt-md-4 row mt-4">
-        <div class="col-12 text-center">
-            <h3 class="logo">AnaUme-App</h3>
-            <small class="d-block mb-3 text-muted">© 2021 Shunichiro Sakamoto</small>
-        </div>
-    </footer>
+    {% include 'footer.html' %}
     <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
