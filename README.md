@@ -34,7 +34,7 @@ python manage.py createsuperuser
 ```sh
 python manage.py runserver
 ```
-localhost:8000 からアクセスが可能になる
+localhost:8000 からのアクセスが可能になる
 
 ## ページ構成
 
