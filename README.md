@@ -13,7 +13,8 @@ HerokuApp: [https://anaume-app.herokuapp.com/](https://anaume-app.herokuapp.com/
 ```sh
 git clone https://github.com/mongesan/Anaume-app
 ```
-\EnglishApp上でpythonモジュールをまとめてインストール(要pip)
+以後、\EnglishApp上で実行  
+pythonモジュールをまとめてインストール(要pip)
 ```sh
 pip install -r requirements.txt
 ```
@@ -21,7 +22,7 @@ pip install -r requirements.txt
 ```sh
 python manage.py migrate
 ```
-staticfileの生成
+staticfilesの生成
 ```sh
 python manage.py collectstatic
 ```
