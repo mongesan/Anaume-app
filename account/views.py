@@ -31,7 +31,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('account:index')
+            return redirect('main:mynote')
     else:
         form = UserCreationForm()
     return render(request, 'account/signup.html', {'form': form, 'user': request.user, })
