@@ -36,17 +36,7 @@ localhost:8000 からのアクセスが可能になります
 
 ## 使い方
 参考動画  
-<iframe width="560" height="315" src="https://www.youtube.com/embed/MjxqplKpwmQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[https://www.youtube.com/watch?v=MjxqplKpwmQ](https://www.youtube.com/watch?v=MjxqplKpwmQ)
 
 
-[comment]: <> (## 開発後記)
-
-[comment]: <> (このアプリの開発には2か月以上を要し、実用的なアプリを目指して開発することの大変さを学びました。)
-
-[comment]: <> (経験の浅いWebアプリ開発が難しいのはもちろん、 デザインと機能面の両方を考えながら一人で開発をすると、どうしても手が回らず実装できない部分が出てしまいます。  )
-
-[comment]: <> (同時に、世に出回っている便利なツールには、多くの人の努力があることを実感しました。)
-
-[comment]: <> (しかし、既に存在するアプリと同じ完成度のものを  )
-
-[comment]: <> (考案・開発: 坂本 俊一朗 &#40;早稲田大学高等学院 1年&#41;)
+考案・開発: 坂本 俊一朗 (早稲田大学高等学院 1年)
