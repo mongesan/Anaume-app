@@ -3,7 +3,7 @@
 [第2回 学力向上アプリコンテスト](https://www.gakuryokuup.com/) 応募作品  
 タイトル: Anaume-app  
 
-名目: 英文記憶補助アプリ  
+名目: 英文学習補助アプリ  
 テーマ: 穴埋め式の記憶法を使った効率的暗記  
 使用言語: HTML5, CSS, Javascript, jQuery(3.6.0), Python(3.7.2)  
 フレームワーク: Django3.2.6  
