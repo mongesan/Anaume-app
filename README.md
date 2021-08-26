@@ -35,7 +35,9 @@ python manage.py runserver
 localhost:8000 からのアクセスが可能になります
 
 ## 使い方
-ホーム画面からアカウントを作成して、最初の英文帳を作成して下さい。
+参考動画  
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MjxqplKpwmQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 [comment]: <> (## 開発後記)
 

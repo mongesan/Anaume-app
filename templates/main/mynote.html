@@ -26,7 +26,7 @@
                     <p class="circle"></p>
                 </div>
                 <div class="col-9 px-0 d-flex align-items-center">
-                    <h5>あなたの英文帳一覧 <br> (合計{{ object_list.count }}個)</h5>
+                    <h5>あなたの英文帳一覧 <br> (合計<span id="count">{{ object_list.count }}</span>件)</h5>
                 </div>
             </div>
             {% for note in object_list %}

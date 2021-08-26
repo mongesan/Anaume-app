@@ -80,7 +80,8 @@ class MyNoteListView(ListView):
             mynote = form.save(commit=False)
             mynote.user = request.user
             mynote.save()
-            return JsonResponse({'title': mynote.title, 'note_id': mynote.id, 'user': str(mynote.user)})
+            count = Note.objects.filter(user=request.user).count()
+            return JsonResponse({'title': mynote.title, 'note_id': mynote.id, 'user': str(mynote.user), 'count': count})
 
 
 def note(request, note_id):
