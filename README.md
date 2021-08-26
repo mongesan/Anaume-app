@@ -1,7 +1,7 @@
-# About Anaume-app
+# About Anaume-App
 
 [第2回 学力向上アプリコンテスト](https://www.gakuryokuup.com/) 応募作品  
-タイトル: Anaume-app  
+タイトル: Anaume-App  
 
 名目: 英文学習補助アプリ  
 テーマ: 穴埋め式の記憶法を使った効率的暗記  
