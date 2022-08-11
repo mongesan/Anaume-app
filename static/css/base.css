@@ -131,7 +131,25 @@ input#name_change:checked ~ .name_change_form,input#select:checked ~ .note_selec
     transition: all 0.3s;
 }
 
-#bottom-button {
+/*.bottom-button {*/
+/*    position: fixed;*/
+/*    bottom: 10px;*/
+/*    font-size: 1.5rem;*/
+/*    line-height: 1.5rem;*/
+/*    background: #fff;*/
+/*    color: #FF530D;*/
+/*    padding: 10px;*/
+/*    border: solid 1px;*/
+/*    border-radius: 30%;*/
+/*    box-shadow: 0 2px 10px -6px rgba(0,0,0,.5), 0 3px 10px -4px rgba(0,0,0,.2);*/
+/*    transition: all 0.3s;*/
+/*}*/
+
+/*.bottom-button:hover {*/
+/*    background: #FF530D;*/
+/*    color: #fff;*/
+/*}*/
+.footer-btn{
     position: fixed;
     bottom: 10px;
     font-size: 1.5rem;
@@ -142,10 +160,30 @@ input#name_change:checked ~ .name_change_form,input#select:checked ~ .note_selec
     border: solid 1px;
     border-radius: 30%;
     box-shadow: 0 2px 10px -6px rgba(0,0,0,.5), 0 3px 10px -4px rgba(0,0,0,.2);
+    transition: all 0.2s;
+    opacity: 1;
+}
+
+
+.footer-btn:hover {
+    opacity: 0.4;
+    /*background: #FF530D;*/
+    /*color: #fff;*/
+}
+
+.nav-btn{
+    font-size: 1rem;
+    line-height: 1rem;
+    background: #eeeeee;
+    color: #000000;
+    left: 0;
+    position: fixed;
+    padding-right: 10px;
+    padding-left: 10px;
     transition: all 0.3s;
 }
 
-#bottom-button:hover {
-    background: #FF530D;
-    color: #fff;
+.nav-btn:hover{
+    background: #555555;
+    color: #ffffff;
 }

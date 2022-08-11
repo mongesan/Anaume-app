@@ -15,11 +15,14 @@
                 <div class="STEP1">
                     <h5 class="step">STEP 1</h5>
                     <h5 class="card-title">新しい英文を登録</h5>
-                    <small class="text-muted">スペルミスに注意! 誤った単語や意味を覚えないで!</small>
+                    <small class="text-muted">スペルミスに注意!</small>
                     <form id="ajax-add-text" action="{% url 'main:note' note_id=id %}" method="POST" name="add_text">
                         {% bootstrap_form form layout='horizontal' %}
-                        <button class="btn btn-primary w-25 maker" type="submit" value="first"><i class="fas fa-arrow-circle-up mx-1"></i>一番上に作成</button>
-                        <button class="btn btn-primary w-25 maker" type="submit" value="last">一番下に作成<i class="fas fa-arrow-circle-down mx-1"></i></button>
+                        <button class="btn btn-primary w-25 maker" type="submit" value="first"><i
+                                class="fas fa-arrow-circle-up mx-1"></i>一番上に作成
+                        </button>
+                        <button class="btn btn-primary w-25 maker" type="submit" value="last">一番下に作成<i
+                                class="fas fa-arrow-circle-down mx-1"></i></button>
                         {% csrf_token %}
                     </form>
                 </div>
@@ -35,21 +38,21 @@
     <div class="my-4 mx-auto w-100 text-center">
         <div class="card border-success">
             <div class="card-body bg-success text-white hiddenNoteID" id="{{ note.id }}">
-            {% if user.is_authenticated %}
-                <div class="text-right position-relative">
-{#                    <small class="text-white">お気に入りボタン→</small>#}
-                    <button class="btn-fav position-absolute" style="top:-3px"
-                            formaction="{% url 'main:fav_note' note_id=note.id %}"
-                            data-toggle="tooltip"
-                            title="お気に入り/解除">
-                        {% if if_fav %}
-                            <i class="fas fa-star"></i>
-                        {% else %}
-                            <i class="far fa-star"></i>
-                        {% endif %}
-                    </button>
-                </div>
-            {% endif %}
+                {% if user.is_authenticated %}
+                    <div class="text-right position-relative">
+                        {#                    <small class="text-white">お気に入りボタン→</small>#}
+                        <button class="btn-fav position-absolute" style="top:-3px"
+                                formaction="{% url 'main:fav_note' note_id=note.id %}"
+                                data-toggle="tooltip"
+                                title="お気に入り/解除">
+                            {% if if_fav %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        </button>
+                    </div>
+                {% endif %}
                 {% if note.user.username == user.username %}
                     <label for="name_change" class="btn btn-sm btn-secondary mb-2">タイトルの変更 <i
                             class="fas fa-pencil-alt"></i></label>
@@ -169,7 +172,14 @@
             </div>
         </div>
     </div>
+    <a href="#" class="nav-btn border-dark" style="bottom: 20px;" data-toggle="tooltip"
+       title="TO TOP"><i class="fas fa-arrow-up"></i></a>
+    <a href="#footer" class="nav-btn border-dark" style="bottom: 0px;" data-toggle="tooltip"
+       title="TO BOTTOM"><i class="fas fa-arrow-down"></i></a>
+    <button class="footer-btn" style="right: 10px;" data-toggle="tooltip"
+       title="穴埋め表示/非表示"><i class="fa-solid fa-eye"></i></button>
 {% endblock %}
 {% block extra_js %}
     <script src="{% static 'js/note.js' %}"></script>
+    <script src="{% static 'js/btn-change.js' %}"></script>
 {% endblock %}
