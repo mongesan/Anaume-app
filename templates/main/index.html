@@ -14,10 +14,10 @@
             <p class="circle" style="background: #999999"></p>
         </div>
         <div class="col-sm-5 d-flex align-items-center">
-            <h1 style="font-size: 45px">
+            <h1 style="font-size: 40px">
+                忙しい学院生のために作られた<br>
                 <input class="d-none check_box" type="checkbox" id="test" name="scales">
-                <label class="toggle" for="test">穴埋め式</label>
-                の記憶法で<br>早く、簡単に、英文を覚えよう
+                <label class="toggle" for="test">穴埋め</label>の暗記術
             </h1>
         </div>
         <div class="col-sm-6 d-flex align-items-center">
@@ -81,6 +81,8 @@
             </ul>
         </div>
         <div class="text-center w-100 mt-4">
+            <a href="{% url 'main:search_note' %}" class="btn px-5 py-3 btn-primary mb-2">全暗記帳を見る・探す</a>
+            <br>
             <a href="{% url 'account:signup' %}" class="btn btn-success mb-2">サインアップして作成!</a>
             <a href="{% url 'account:login' %}" class="btn btn-secondary mb-2">ログイン</a>
         </div>

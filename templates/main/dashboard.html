@@ -21,8 +21,11 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-6 d-flex align-items-center justify-content-center">
-            <a href="{% url 'main:mynote' %}" class="btn btn-primary px-5 py-4 my-4 font-weight-bold"><i class="fas fa-bookmark mr-1"></i>マイ英文帳ページ<br>作成・閲覧・印刷</a>
+        <div class="col-md-3 d-flex align-items-center justify-content-center">
+            <a href="{% url 'main:mynote' %}" class="btn btn-primary px-4 py-4 my-2 font-weight-bold"><i class="fas fa-bookmark mr-1"></i>マイ英文帳ページ<br>作成・閲覧・印刷</a>
+        </div>
+        <div class="col-md-3 d-flex align-items-center justify-content-center border-right border-left">
+            <a href="{% url 'main:search_note' %}" class="btn btn-dark px-4 py-4 my-2 font-weight-bold"><i class="fas fa-book mr-1"></i>公開中の<br>全英文帳リスト</a>
         </div>
     </div>
     <div class="row w-100 mx-auto d-flex justify-content-around">
