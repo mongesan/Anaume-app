@@ -66,7 +66,7 @@ $("form#ajax-add-text").on('submit', e => {
                         }
                     }
                 }
-                console.log(last)
+                // console.log(last)
                 $('<input class="d-none check_box" type="checkbox" id=' + box_id + ' name="check[]">' + '<label class="toggle" for=' + box_id + '>' + elem + '</label>' + '<span> '+ last +' </span>').appendTo('#ajax-checkbox-text');
                 i += 1
             });
@@ -92,6 +92,7 @@ $("form#ajax-add-text").on('submit', e => {
 });
 
 $(document).on('submit', "form#ajax-checkbox-text", e => {
+    console.log('B')
     e.preventDefault();
     const form = $('form#ajax-checkbox-text');
     let checks = [];
