@@ -1,5 +1,6 @@
 {% load i18n static %}
 {% load bootstrap_icons %}
+
 <!DOCTYPE html>{% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
 <head>
@@ -15,69 +16,22 @@
         </div>
         <div class="col-sm-5 d-flex align-items-center">
             <h1 style="font-size: 40px">
-                忙しい学院生のために作られた<br>
+                <label class="toggle" for="test">穴埋め</label>アプリの<br>
                 <input class="d-none check_box" type="checkbox" id="test" name="scales">
-                <label class="toggle" for="test">穴埋め</label>の暗記術
+                ご利用ありがとうございます！
+
+
             </h1>
         </div>
         <div class="col-sm-6 d-flex align-items-center">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item py-0">
-                    <small class="text-muted">(例文)</small>
+                    <small>寄付してくださった方々<br>(ニックネーム/敬称略)</small>
                 </li>
-                <li class="list-group-item">
-                    <input class="d-none check_box" type="checkbox" id="t131w0" name="scales" checked="">
-                    <label class="toggle" for="t131w0">In</label>
-                    <input class="d-none check_box" type="checkbox" id="t131w1" name="scales" checked="">
-                    <label class="toggle" for="t131w1">short,</label>
-                    the
-                    <input class="d-none check_box" type="checkbox" id="t131w3" name="scales" checked="">
-                    <label class="toggle" for="t131w3">purpose</label>
-                    of
-                    the
-                    <input class="d-none check_box" type="checkbox" id="t131w6" name="scales" checked="">
-                    <label class="toggle" for="t131w6">regulation</label>
-                    is
-                    to
-                    <input class="d-none check_box" type="checkbox" id="t131w9" name="scales" checked="">
-                    <label class="toggle" for="t131w9">protect</label>
-                    <input class="d-none check_box" type="checkbox" id="t131w10" name="scales" checked="">
-                    <label class="toggle" for="t131w10">domestic</label>
-                    industries.
-                    <br>
-                    要するに、その規制の目的は国内産業の保護だ。
+                <li class="list-group-item text-muted">
+                    {% include 'list_specialthanks.html' %}
                 </li>
-                <li class="list-group-item d-none d-lg-block">
-                    In
-                    order
-                    to
-                    <input class="d-none check_box" type="checkbox" id="t130w3" name="scales" checked="">
-                    <label class="toggle" for="t130w3">keep</label>
-                    <input class="d-none check_box" type="checkbox" id="t130w4" name="scales" checked="">
-                    <label class="toggle" for="t130w4">up</label>
-                    its
-                    <input class="d-none check_box" type="checkbox" id="t130w6" name="scales" checked="">
-                    <label class="toggle" for="t130w6">competitiveness</label>
-                    in
-                    the
-                    world,
-                    Japan
-                    must
-                    <input class="d-none check_box" type="checkbox" id="t130w12" name="scales" checked="">
-                    <label class="toggle" for="t130w12">under</label>
-                    <input class="d-none check_box" type="checkbox" id="t130w13" name="scales" checked="">
-                    <label class="toggle" for="t130w13">take</label>
-                    <input class="d-none check_box" type="checkbox" id="t130w14" name="scales" checked="">
-                    <label class="toggle" for="t130w14">sweeping</label>
-                    <input class="d-none check_box" type="checkbox" id="t130w15" name="scales" checked="">
-                    <label class="toggle" for="t130w15">deregulation</label>
-                    <input class="d-none check_box" type="checkbox" id="t130w16" name="scales" checked="">
-                    <label class="toggle" for="t130w16">in</label>
-                    <input class="d-none check_box" type="checkbox" id="t130w17" name="scales" checked="">
-                    <label class="toggle" for="t130w17">earnest.</label>
-                    <br>
-                    世界での競争力を維持するためには、日本は大幅な規制緩和に真剣に着手しなければならない。
-                </li>
+                <h6 class="logo my-3">¥8989 Donated. Thank you!</h6>
             </ul>
         </div>
         <div class="text-center w-100 mt-4">
